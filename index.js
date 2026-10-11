@@ -1,10 +1,10 @@
 /**
- * @file        api/index.js
- * @description Addon de Stremio para reproducir streams de deportes en vivo (.m3u8 / .mpd).
+ * @file        index.js
+ * @description Addon de Stremio para reproducir enlaces .m3u8 y .mpd.
  *              Expone los endpoints del protocolo Stremio (manifest, catalog, meta, stream).
- *              Los canales se leen desde streams.json alojado en GitHub (sin backend propio).
- * @usage       Desplegado como función serverless en Vercel. Localmente con `node api/index.js`.
- * @data        streams.json del repositorio GitHub — URLs de canales de deportes en vivo.
+ *              Los canales se leen desde streams.json alojado en GitHub.
+ * @usage       Desplegado como función serverless en Vercel. Localmente con `node index.js`.
+ * @data        streams.json del repositorio GitHub.
  */
 
 'use strict';
@@ -108,13 +108,13 @@ function respond(res, data, maxAgeSeconds = 300) {
  * Define las capacidades que expone: catálogo, meta y stream de tipo 'tv'.
  */
 const MANIFEST = {
-  id: 'ar.claudioale.stremio.deportes',
+  id: 'stremio.deportes',
   version: '1.0.0',
   name: 'Deportes en Vivo',
   description:
-    'Canales de deportes en vivo con streams .m3u8 y .mpd. ' +
+    'Canales de deportes en vivo. ' +
     'Contenido provisto por el usuario — verificar legalidad en tu jurisdicción.',
-  logo: 'https://i.imgur.com/placeholder-logo.png', // reemplazar con logo propio
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/1/1d/FIA_F1_Imola_2025_No._43_Colapinto_%282%29.jpg', // reemplazar con logo propio
   types: ['tv'],
   catalogs: [
     {
