@@ -1,6 +1,52 @@
 {
   "channels": [
     {
+      "id": "fox-sports",
+      "name": "Fox Sports",
+      "description": "Fox Sports en vivo",
+      "logo": "https://img.agenda18.com/uploads/fox_sports_1_7dbc294272.webp",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://am91cm5leq.fubo18.com/foxsports/mono.m3u8?token=a01a0de8fb785512c7eb9cf3d288937419068b80-b7-1791699176-1791681176",
+          "label": "HD"
+        },
+        {
+          "url": "https://reemplazar-con-enlace-real-sd.m3u8",
+          "label": "SD"
+        }
+      ]
+    },
+    {
+      "id": "espn-1",
+      "name": "ESPN 1",
+      "description": "ESPN 1 en vivo",
+      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
+          "label": "HD 1080p"
+        }
+      ]
+    },
+    {
+      "id": "espn-premium",
+      "name": "ESPN Premium",
+      "description": "ESPN Premium en vivo",
+      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
+          "label": "HD 1080p"
+        }
+      ]
+    },
+    {
       "id": "espn-2",
       "name": "ESPN 2",
       "description": "ESPN 2 en vivo — eventos deportivos",
@@ -32,13 +78,13 @@
     {
       "id": "tyc-sports",
       "name": "TyC Sports",
-      "description": "TyC Sports en vivo — fútbol argentino y más",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/TyC_Sports_Logo.svg/240px-TyC_Sports_Logo.svg.png",
+      "description": "TyC Sports en vivo",
+      "logo": "https://www.tvporinternet.org/imge/tycsports.webp",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "streams": [
         {
-          "url": "https://reemplazar-con-enlace-real.m3u8",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/6/tracks-v1a1/mono.m3u8?token=cf2856f6e808e8f21f96df47c61457fdbfa47f47-8975daf826bae12358afcf9de2ac2699-1791703988-1791682388",
           "label": "HD"
         },
         {
@@ -48,15 +94,15 @@
       ]
     },
     {
-      "id": "ejemplo-con-headers",
-      "name": "Canal con Headers (ejemplo)",
-      "description": "Ejemplo de canal que requiere Referer y User-Agent personalizados",
-      "logo": "",
+      "id": "tnt-sports-premium",
+      "name": "TNT Sports Premium",
+      "description": "TNT Sports en vivo",
+      "logo": "https://img.agenda18.com/uploads/tnt_sports_572930c5da.webp",
       "background": "",
       "genres": ["Deportes"],
       "streams": [
         {
-          "url": "https://reemplazar-con-enlace-real.m3u8",
+          "url": "https://11.ftlly.com/tntsports/mono.m3u8?token=d672a5dd9d87ece0446fb8be68fdfa2436198c6b-ea-1791698944-1791680944",
           "label": "HD",
           "headers": {
             "Referer": "https://sitio-origen.com/",
