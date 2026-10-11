@@ -64,8 +64,7 @@
       "id": "espn-3",
       "name": "ESPN 3",
       "description": "ESPN 3 en vivo — eventos deportivos",
-      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_3.webp",
-      "logo2": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/240px-ESPN_wordmark.svg.png",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/58/ESPN_3.png",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "streams": [
@@ -79,7 +78,7 @@
       "id": "tyc-sports",
       "name": "TyC Sports",
       "description": "TyC Sports en vivo",
-      "logo": "https://www.tvporinternet.org/imge/tycsports.webp",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/8/89/TyC_Sports_Logo.svg",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "streams": [
