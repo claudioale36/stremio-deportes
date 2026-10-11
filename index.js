@@ -243,8 +243,12 @@ app.get('/stream/tv/:id.json', async (req, res) => {
 
 // ─── Arranque ─────────────────────────────────────────────────────────────────
 
-/** Exportar la app para Vercel (serverless handler) */
-module.exports = app;
+/**
+ * Exportar como handler explícito para Vercel.
+ * Wrappear la app en una función garantiza compatibilidad con @vercel/node,
+ * evitando ambigüedades cuando Vercel recibe module.exports = expressApp directamente.
+ */
+module.exports = (req, res) => app(req, res);
 
 /** Arranque local para desarrollo: `node api/index.js` */
 if (require.main === module) {
