@@ -1,0 +1,54 @@
+{
+  "channels": [
+    {
+      "id": "espn-hd",
+      "name": "ESPN HD",
+      "description": "ESPN en vivo — eventos deportivos en alta definición",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/240px-ESPN_wordmark.svg.png",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://reemplazar-con-enlace-real.m3u8",
+          "label": "HD 1080p"
+        }
+      ]
+    },
+    {
+      "id": "tyc-sports",
+      "name": "TyC Sports",
+      "description": "TyC Sports en vivo — fútbol argentino y más",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/TyC_Sports_Logo.svg/240px-TyC_Sports_Logo.svg.png",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://reemplazar-con-enlace-real.m3u8",
+          "label": "HD"
+        },
+        {
+          "url": "https://reemplazar-con-enlace-real-sd.m3u8",
+          "label": "SD"
+        }
+      ]
+    },
+    {
+      "id": "ejemplo-con-headers",
+      "name": "Canal con Headers (ejemplo)",
+      "description": "Ejemplo de canal que requiere Referer y User-Agent personalizados",
+      "logo": "",
+      "background": "",
+      "genres": ["Deportes"],
+      "streams": [
+        {
+          "url": "https://reemplazar-con-enlace-real.m3u8",
+          "label": "HD",
+          "headers": {
+            "Referer": "https://sitio-origen.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    }
+  ]
+}

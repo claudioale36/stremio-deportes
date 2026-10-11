@@ -1,0 +1,16 @@
+{
+  "name": "stremio-deportes",
+  "version": "1.0.0",
+  "description": "Addon de Stremio para reproducir streams de deportes en vivo (.m3u8 / .mpd)",
+  "main": "api/index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "node --watch api/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
