@@ -1,15 +1,30 @@
 {
   "channels": [
     {
-      "id": "espn-hd",
-      "name": "ESPN HD",
-      "description": "ESPN en vivo — eventos deportivos en alta definición",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/240px-ESPN_wordmark.svg.png",
+      "id": "espn-2",
+      "name": "ESPN 2",
+      "description": "ESPN 2 en vivo — eventos deportivos",
+      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "streams": [
         {
           "url": "https://reemplazar-con-enlace-real.m3u8",
+          "label": "HD 1080p"
+        }
+      ]
+    },
+    {
+      "id": "espn-3",
+      "name": "ESPN 3",
+      "description": "ESPN 3 en vivo — eventos deportivos",
+      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_3.webp",
+      "logo2": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/240px-ESPN_wordmark.svg.png",
+      "background": "",
+      "genres": ["Fútbol", "Deportes"],
+      "streams": [
+        {
+          "url": "https://c2f2zq.fubo18.com/espn3/mono.m3u8?token=e78d1c70e8a211cdabbf9aa3e89a66e05a03358d-ab-1791695587-1791677587",
           "label": "HD 1080p"
         }
       ]

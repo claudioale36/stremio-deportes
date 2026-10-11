@@ -21,7 +21,7 @@ const app = express();
  * Formato: https://raw.githubusercontent.com/USUARIO/REPO/main/streams.json
  */
 const STREAMS_JSON_URL = process.env.STREAMS_JSON_URL ||
-  'https://raw.githubusercontent.com/USUARIO/stremio-deportes/main/streams.json';
+  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/main/streams.json';
 
 /** TTL del caché en memoria — 5 minutos (en milisegundos) */
 const CACHE_TTL_MS = 5 * 60 * 1000;
