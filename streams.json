@@ -15,6 +15,14 @@
       },
       "streams": [
         {
+          "url": "https://ewvz.fubo18.com/foxsports/mono.m3u8?token=70f2257e16b908c39a9b44837fdba56869c7966d-db-1791792660-1791774660",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
           "url": "https://am91cm5leq.fubo18.com/foxsports/mono.m3u8?token=a01a0de8fb785512c7eb9cf3d288937419068b80-b7-1791699176-1791681176",
           "label": "HD 1080p",
           "headers": {
@@ -37,14 +45,6 @@
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
@@ -52,12 +52,12 @@
       "id": "disney-+",
       "name": "Disney +",
       "description": "Disney + - ESPN Premium — Formula 1",
-      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -77,41 +77,25 @@
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
     {
       "id": "espn-1",
-      "name": "ESPN 1",
+      "name": "ESPN",
       "description": "ESPN 1 en vivo",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/9/99/ESPN_logo.png",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/espn",
         "depth": 2,
         "cacheTTL": 1800
       },
       "streams": [
         {
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
+          "url": "https://2.ftlly.com/espn/mono.m3u8?token=b1f9ecd0394e54cda1e838f155b95d3d891aae9a-74-1791794490-1791776490",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -119,23 +103,7 @@
           }
         },
         {
-          "url": "https://4.ftlly.com/foxsports/mono.m3u8?token=66ffc759c5e9912893f4aecb5e1095bb22d8c98a-cc-1791699418-1791681418",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://futbollibre.mom",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://bgvnzw5k.fubo18.com/espn/mono.m3u8?token=52988ebbe9870c9b51337c9d0efbb41085197799-34-1791708227-1791690227",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibre.la",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://ewvz.fubo18.com/espn/mono.m3u8?token=8e62ac60d72937c92b3b502909bef7770b0544ff-c7-1791708573-1791690573",
+          "url": "",
           "label": "HD 1080p",
           "headers": {
             "Referer": "https://pelotalibre.la",
@@ -148,12 +116,12 @@
       "id": "espn-2",
       "name": "ESPN 2",
       "description": "ESPN 2 en vivo — Moto GP",
-      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/ESPN2_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/espn-2",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -181,14 +149,6 @@
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "url": "https://4.ftlly.com/foxsports/mono.m3u8?token=66ffc759c5e9912893f4aecb5e1095bb22d8c98a-cc-1791699418-1791681418",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
@@ -201,29 +161,13 @@
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/espn-3",
         "depth": 2,
         "cacheTTL": 1800
       },
       "streams": [
         {
           "url": "https://c2f2zq.fubo18.com/espn3/mono.m3u8?token=e78d1c70e8a211cdabbf9aa3e89a66e05a03358d-ab-1791695587-1791677587",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -244,12 +188,12 @@
       "id": "espn-premium",
       "name": "ESPN Premium",
       "description": "ESPN Premium en vivo",
-      "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/db/ESPN_Premium_logo.png",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/liga-1-max",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -271,6 +215,12 @@
       "logo": "https://upload.wikimedia.org/wikipedia/commons/8/89/TyC_Sports_Logo.svg",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/tyc-sports",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://deportes.ksdjugfssddeports.com/playlist/6/tracks-v1a1/mono.m3u8?token=cf2856f6e808e8f21f96df47c61457fdbfa47f47-8975daf826bae12358afcf9de2ac2699-1791703988-1791682388",
@@ -287,57 +237,25 @@
             "Referer": "https://pelotalibre.la/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
     {
-      "id": "tnt-sports-premium",
-      "name": "TNT Sports Premium",
+      "id": "tnt-sports",
+      "name": "TNT Sports",
       "description": "TNT Sports en vivo",
       "logo": "https://img.agenda18.com/uploads/tnt_sports_572930c5da.webp",
       "background": "",
       "genres": ["Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/tnt-sports",
         "depth": 2,
         "cacheTTL": 1800
       },
       "streams": [
         {
           "url": "https://11.ftlly.com/tntsports/mono.m3u8?token=d672a5dd9d87ece0446fb8be68fdfa2436198c6b-ea-1791698944-1791680944",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -363,7 +281,7 @@
       "genres": ["Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://futbollibre.mom/canal/dsports",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -373,22 +291,6 @@
           "label": "HD 1080p",
           "headers": {
             "Referer": "https://pelotalibre.la/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         },
