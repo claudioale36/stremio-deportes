@@ -10,37 +10,21 @@
       "extractor": {
         "type": "iframe-chain",
         "url": "https://tvf90.com/online.php?stream=foxsports",
-        "url2": "https://futbollibre.mom/canal/fox-sports/",
+        "url2": "https://futbollibre.mom/canal/fox-sports",
         "depth": 2,
         "cacheTTL": 1800
       },
       "streams": [
         {
+          "url": "https://4.ftlly.com/foxsports/mono.m3u8?token=66fc3a6eee4e1393c2b10459a0127f154e3a01bd-7a-1791798808-1791780808",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
           "url": "https://ewvz.fubo18.com/foxsports/mono.m3u8?token=70f2257e16b908c39a9b44837fdba56869c7966d-db-1791792660-1791774660",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://am91cm5leq.fubo18.com/foxsports/mono.m3u8?token=a01a0de8fb785512c7eb9cf3d288937419068b80-b7-1791699176-1791681176",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://dglvz29s.fubo18.com/foxsports/mono.m3u8?token=6a3dd6fb6ec65579eaf6f02e2a798780cb3615e3-30-1791708509-1791690509",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibre.la/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
