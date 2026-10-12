@@ -41,10 +41,12 @@
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "Disney+",
+        "preferHD": false,
         "url": "https://la18hd.su/vivo/canales.php?stream=espn",
         "url2": "https://tvf90.com/online.php?stream=espn",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -74,9 +76,11 @@
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "ESPN",
+        "preferHD": true,
         "url": "https://futbollibre.mom/canal/espn",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -106,10 +110,12 @@
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "ESPN 2",
+        "preferHD": true,
         "url": "https://tvf90.com/online.php?stream=espn2",
         "url2": "https://futbollibre.mom/canal/espn-2",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -147,9 +153,11 @@
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "ESPN 3",
+        "preferHD": true,
         "url": "https://futbollibre.mom/canal/espn-3",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -179,9 +187,11 @@
       "background": "",
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "ESPN Premium",
+        "preferHD": true,
         "url": "https://futbollibre.mom/canal/liga-1-max",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -236,10 +246,12 @@
       "background": "",
       "genres": ["Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "TNT Sports",
+        "preferHD": true,
         "url": "https://tvf90.com/online.php?stream=tntsports",
         "url2": "https://futbollibre.mom/canal/tnt-sports",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [
@@ -269,10 +281,12 @@
       "background": "",
       "genres": ["Deportes"],
       "extractor": {
-        "type": "iframe-chain",
+        "type": "api-embed",
+        "channelName": "DSports",
+        "preferHD": false,
         "url": "https://tvf90.com/online.php?stream=dsports",
         "url2": "https://futbollibre.mom/canal/dsports",
-        "depth": 2,
+        "depth": 1,
         "cacheTTL": 1800
       },
       "streams": [

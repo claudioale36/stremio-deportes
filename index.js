@@ -85,6 +85,144 @@ async function getChannels() {
  */
 const _streamUrlCache = new Map();
 
+// ─── Caché de la API de agenda (diaries) ─────────────────────────────────────
+
+/**
+ * URL de la API de agenda de futbollibre.mom.
+ * Expone todos los eventos del día con sus embeds y canales asociados.
+ */
+const DIARIES_API_URL = 'https://api.wqxag.com/diaries.json';
+
+/** TTL del caché de la API de agenda — 30 minutos */
+const DIARIES_CACHE_TTL_MS = 30 * 60 * 1000;
+
+let _diariesCache    = null;
+let _diariesCacheTs  = 0;
+
+/**
+ * Obtiene y cachea el listado de embeds únicos desde la API de agenda.
+ * Aplana todos los embeds de todos los eventos en un array deduplicado.
+ * @returns {Promise<Array<{name: string, iframe: string}>>}
+ */
+async function getDiariesEmbeds() {
+  const now = Date.now();
+
+  if (_diariesCache && (now - _diariesCacheTs) < DIARIES_CACHE_TTL_MS) {
+    return _diariesCache;
+  }
+
+  const res = await fetch(`${DIARIES_API_URL}?_=${now}`);
+  if (!res.ok) throw new Error(`Diaries API respondió HTTP ${res.status}`);
+
+  const data = await res.json();
+
+  // Aplanar todos los embeds de todos los eventos en un único array
+  const all = [];
+  for (const event of (data.data || [])) {
+    const embeds = event?.attributes?.embeds?.data || [];
+    for (const embed of embeds) {
+      const a = embed?.attributes;
+      if (a?.embed_name && a?.embed_iframe) {
+        all.push({ name: a.embed_name, iframe: a.embed_iframe });
+      }
+    }
+  }
+
+  // Deduplicar por embed_iframe — la misma señal aparece en múltiples eventos
+  const seen   = new Set();
+  const unique = all.filter(e => {
+    if (seen.has(e.iframe)) return false;
+    seen.add(e.iframe);
+    return true;
+  });
+
+  _diariesCache   = unique;
+  _diariesCacheTs = now;
+
+  console.log(`[diaries] ${unique.length} embeds únicos cargados desde API`);
+  return unique;
+}
+
+/**
+ * Normaliza un nombre de canal para comparación: minúsculas, sin acentos,
+ * separadores de opciones (| ┃ +) tratados como espacios.
+ * @param {string} s
+ * @returns {string}
+ */
+function normalizeName(s) {
+  return String(s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[|\u2503+]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Extrae la URL .m3u8 usando la API de agenda de futbollibre.mom.
+ * Busca el canal por nombre, decodifica el base64 del embed_iframe,
+ * y sigue la cadena de iframes resultante para obtener el stream.
+ *
+ * Flujo:
+ *   GET api.wqxag.com/diaries.json  →  decode base64  →  tvf90.com/X.php?stream=Y
+ *     →  followIframeChain(depth)   →  m3u8
+ *
+ * @param {string}  channelName - Nombre a buscar en embed_name (ej: "ESPN 2")
+ * @param {boolean} preferHD    - Si true, prioriza entradas con hd.php
+ * @param {number}  depth       - Niveles de iframe-chain desde la URL obtenida
+ * @param {object}  headers     - Headers base para los fetches siguientes
+ * @returns {Promise<{url: string, referer: string}|null>}
+ */
+async function fetchFromDiariesApi(channelName, preferHD, depth, headers) {
+  const embeds = await getDiariesEmbeds();
+  const target = normalizeName(channelName);
+
+  // Comparar solo el nombre base del embed (antes del primer | o ┃)
+  const matching = embeds.filter(e => {
+    const base = normalizeName(e.name.split(/[|\u2503]/)[0]);
+    return base === target;
+  });
+
+  if (!matching.length) {
+    console.warn(`[diaries] Sin embed para "${channelName}" en la agenda de hoy`);
+    return null;
+  }
+
+  // Preferir HD (hd.php) si está disponible y se solicita
+  let chosen = matching[0];
+  if (preferHD) {
+    const hd = matching.find(e => e.iframe.includes('hd.php'));
+    if (hd) {
+      chosen = hd;
+      console.log(`[diaries] Usando variante HD para "${channelName}"`);
+    }
+  }
+
+  console.log(`[diaries] Embed elegido: "${chosen.name}"`);
+
+  // Extraer el parámetro ?r= que contiene la URL en base64
+  const rMatch = chosen.iframe.match(/[?&]r=([^&\s]+)/);
+  if (!rMatch) {
+    console.warn(`[diaries] No se encontró parámetro r= en: ${chosen.iframe}`);
+    return null;
+  }
+
+  // Decodificar base64 → URL directa de tvf90.com
+  let tvfUrl;
+  try {
+    tvfUrl = Buffer.from(rMatch[1], 'base64').toString('utf8').trim();
+  } catch (e) {
+    console.warn(`[diaries] Error decodificando base64: ${e.message}`);
+    return null;
+  }
+
+  console.log(`[diaries] URL decodificada: ${tvfUrl}`);
+
+  // Seguir la cadena de iframes desde la URL de tvf90.com
+  return await followIframeChain(tvfUrl, headers, depth);
+}
+
 /**
  * Punto de entrada del sistema de extracción.
  * Decide qué estrategia usar según extractor.type y gestiona el caché.
@@ -124,6 +262,17 @@ async function extractStreamUrl(extractor, channelId) {
       // Tipo encadenado: seguir iframes hasta encontrar el .m3u8
       const depth = extractor.depth || 2;
       result = await followIframeChain(extractor.url, baseHeaders, depth);
+
+    } else if (extractor.type === 'api-embed') {
+      // Tipo API: resuelve el canal vía la agenda de futbollibre.mom (api.wqxag.com).
+      // Decodifica el base64 del embed_iframe y sigue la cadena de iframes resultante.
+      // Prioriza variante hd.php si preferHD es true (default: true).
+      result = await fetchFromDiariesApi(
+        extractor.channelName,
+        extractor.preferHD !== false,
+        extractor.depth || 1,
+        baseHeaders
+      );
     }
 
   } catch (err) {
