@@ -2,11 +2,17 @@
   "channels": [
     {
       "id": "fox-sports",
-      "name": "Fox Sports",
+      "name": "Fox Sports HD",
       "description": "Fox Sports en vivo",
-      "logo": "https://img.agenda18.com/uploads/fox_sports_1_7dbc294272.webp",
+      "logo": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAdcPH5aK4RA9Q3o78d-nBsYii80x0-F0NO4j6Jj4N-BWITMxKx4kCA3pqJ0Y2cNmx_04IweBr055IB58rjG8yxOukqTQQNhzQMquJ6gXYkj67-3hxatG_CzN63IjJK6RSHv4RDmjlWLrFdLSkDsarXmSxKlMFKkcio5l1qw45oU23-gk1_DuGbQ0LvwI/s960/Fox_Sports2026.png",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://am91cm5leq.fubo18.com/foxsports/mono.m3u8?token=a01a0de8fb785512c7eb9cf3d288937419068b80-b7-1791699176-1791681176",
@@ -49,6 +55,12 @@
       "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
@@ -91,6 +103,12 @@
       "logo": "https://upload.wikimedia.org/wikipedia/commons/9/99/ESPN_logo.png",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
@@ -133,6 +151,12 @@
       "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://4.ftlly.com/espn2/mono.m3u8?token=a4af23b4ffcfb661f4e7e5b42f8f8c5ca580912f-d0-1791707078-1791689078",
@@ -175,6 +199,12 @@
       "logo": "https://upload.wikimedia.org/wikipedia/commons/5/58/ESPN_3.png",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://c2f2zq.fubo18.com/espn3/mono.m3u8?token=e78d1c70e8a211cdabbf9aa3e89a66e05a03358d-ab-1791695587-1791677587",
@@ -217,6 +247,12 @@
       "logo": "https://futbollibrefullhd.org/img/logo-canal/espn_2.webp",
       "background": "",
       "genres": ["Fútbol", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
@@ -277,6 +313,12 @@
       "logo": "https://img.agenda18.com/uploads/tnt_sports_572930c5da.webp",
       "background": "",
       "genres": ["Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://11.ftlly.com/tntsports/mono.m3u8?token=d672a5dd9d87ece0446fb8be68fdfa2436198c6b-ea-1791698944-1791680944",
@@ -319,6 +361,12 @@
       "logo": "",
       "background": "",
       "genres": ["Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://c2f2zq.fubo18.com/dsports/mono.m3u8?token=f85a40ee55f1c9db824a3670e02601fb9c46c6e8-cd-1791708289-1791690289",
@@ -361,6 +409,12 @@
       "logo": "",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://lala4.futlivehd.com/daznf1/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=2596e4706c7c757b88194509f9b82e0cc286927c-e1-1791736847-1791682847",
@@ -403,6 +457,12 @@
       "logo": "",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://razen.futlivehd.com/sporttvbr3/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=98549ec0877bc7bda6cac41abaf606691f3e0ce1-44-1791737176-1791683176",
@@ -445,6 +505,12 @@
       "logo": "",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
@@ -488,6 +554,12 @@
       "logo": "",
       "background": "",
       "genres": ["F1", "Motorsport", "Deportes"],
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "depth": 2,
+        "cacheTTL": 1800
+      },
       "streams": [
         {
           "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
