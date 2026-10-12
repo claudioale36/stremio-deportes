@@ -361,18 +361,18 @@ app.get('/stream/tv/:id.json', async (req, res) => {
   if (ch.extractor && ch.extractor.url && ch.extractor.type) {
     const streamUrl = await extractStreamUrl(ch.extractor, ch.id);
 
-    if (!streamUrl) {
-      console.error(`[stream] No se pudo obtener URL para canal "${ch.id}"`);
-      return respond(res, { streams: [] }, 0);
+    if (streamUrl) {
+      return respond(res, {
+        streams: [{
+          title: ch.name,
+          url:   streamUrl,
+          behaviorHints: { notWebReady: false }
+        }]
+      }, 0);
     }
 
-    return respond(res, {
-      streams: [{
-        title: ch.name,
-        url:   streamUrl,
-        behaviorHints: { notWebReady: false }
-      }]
-    }, 0);
+    // Extractor falló — continúa al Modo 2 para usar streams[] como fallback
+    console.warn(`[stream] Extractor falló para "${ch.id}" — usando streams[] como fallback`);
   }
 
   // ── Modo 2: streams estáticos (sin extractor o como fallback) ───────────

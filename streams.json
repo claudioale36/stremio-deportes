@@ -9,7 +9,8 @@
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://tvf90.com/online.php?stream=foxsports",
+        "url2": "https://futbollibre.mom/canal/fox-sports/",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -57,7 +58,8 @@
       "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "",
+        "url": "https://la18hd.su/vivo/canales.php?stream=espn",
+        "url2": "https://tvf90.com/online.php?stream=espn",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -121,7 +123,8 @@
       "genres": ["Fútbol", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/espn-2",
+        "url": "https://tvf90.com/online.php?stream=espn2",
+        "url2": "https://futbollibre.mom/canal/espn-2",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -218,6 +221,7 @@
       "extractor": {
         "type": "iframe-chain",
         "url": "https://futbollibre.mom/canal/tyc-sports",
+        "url2": "https://tvf90.com/1.php?stream=tycsports",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -249,7 +253,8 @@
       "genres": ["Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/tnt-sports",
+        "url": "https://tvf90.com/online.php?stream=tntsports",
+        "url2": "https://futbollibre.mom/canal/tnt-sports",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -281,7 +286,8 @@
       "genres": ["Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/dsports",
+        "url": "https://tvf90.com/online.php?stream=dsports",
+        "url2": "https://futbollibre.mom/canal/dsports",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -313,7 +319,7 @@
       "genres": ["F1", "Motorsport", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://deporflix.pe/canales/dazn-f1/",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -361,7 +367,7 @@
       "genres": ["F1", "Motorsport", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "https://deporflix.pe/canales/sportv-3/",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -409,7 +415,7 @@
       "genres": ["F1", "Motorsport", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "",
         "depth": 2,
         "cacheTTL": 1800
       },
@@ -458,7 +464,7 @@
       "genres": ["F1", "Motorsport", "Deportes"],
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://futbollibre.mom/canal/fox-sports/",
+        "url": "",
         "depth": 2,
         "cacheTTL": 1800
       },
