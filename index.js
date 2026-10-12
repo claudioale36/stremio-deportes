@@ -102,7 +102,7 @@ async function extractStreamUrl(extractor, channelId) {
   // Retornar caché si está vigente
   if (cached && (Date.now() - cached.timestamp) < ttlMs) {
     console.log(`[extractor] Cache hit para canal "${channelId}"`);
-    return cached.url;
+    return { url: cached.url, referer: cached.referer };
   }
 
   // Headers base que imitan un browser real (necesario para que el servidor responda)
@@ -113,32 +113,32 @@ async function extractStreamUrl(extractor, channelId) {
     ...(extractor.headers || {}) // headers adicionales definidos en streams.json
   };
 
-  let streamUrl = null;
+  let result = null;
 
   try {
     if (extractor.type === 'html-regex') {
       // Tipo directo: la URL .m3u8 está en el HTML de extractor.url
-      streamUrl = await fetchAndExtractM3u8(extractor.url, baseHeaders);
+      result = await fetchAndExtractM3u8(extractor.url, baseHeaders);
 
     } else if (extractor.type === 'iframe-chain') {
       // Tipo encadenado: seguir iframes hasta encontrar el .m3u8
       const depth = extractor.depth || 2;
-      streamUrl = await followIframeChain(extractor.url, baseHeaders, depth);
+      result = await followIframeChain(extractor.url, baseHeaders, depth);
     }
 
   } catch (err) {
     console.error(`[extractor] Error en canal "${channelId}":`, err.message);
   }
 
-  // Guardar en caché solo si se obtuvo una URL válida
-  if (streamUrl) {
-    _streamUrlCache.set(channelId, { url: streamUrl, timestamp: Date.now() });
-    console.log(`[extractor] URL obtenida para "${channelId}": ${streamUrl.substring(0, 80)}...`);
+  // Guardar en caché { url, referer } solo si se obtuvo resultado válido
+  if (result) {
+    _streamUrlCache.set(channelId, { url: result.url, referer: result.referer, timestamp: Date.now() });
+    console.log(`[extractor] URL obtenida para "${channelId}": ${result.url.substring(0, 80)}...`);
   } else {
     console.warn(`[extractor] No se encontró stream para canal "${channelId}"`);
   }
 
-  return streamUrl;
+  return result;
 }
 
 /**
@@ -156,7 +156,8 @@ async function fetchAndExtractM3u8(url, headers) {
 
   // Captura URLs .m3u8 o .mpd con sus parámetros completos (tokens incluidos)
   const match = html.match(/https?:\/\/[^\s"'<>\\]+\.(?:m3u8|mpd)[^\s"'<>\\]*/i);
-  return match ? match[0] : null;
+  // Retorna también el referer (la página que contiene el stream) para pasarlo a Stremio
+  return match ? { url: match[0], referer: url } : null;
 }
 
 /**
@@ -189,7 +190,8 @@ async function followIframeChain(startUrl, headers, maxDepth) {
     const streamMatch = html.match(/https?:\/\/[^\s"'<>\\]+\.(?:m3u8|mpd)[^\s"'<>\\]*/i);
     if (streamMatch) {
       console.log(`[extractor] Stream encontrado en nivel ${depth}`);
-      return streamMatch[0];
+      // Retorna también el referer (currentUrl es la página donde se encontró el stream)
+      return { url: streamMatch[0], referer: currentUrl };
     }
 
     // No hay stream — buscar el siguiente iframe para bajar un nivel más
@@ -338,16 +340,16 @@ app.get('/meta/tv/:id.json', async (req, res) => {
 
 /**
  * Stream de un canal — SIN caché HTTP (los tokens de URL expiran).
- * Dos modos según la configuración del canal en streams.json:
+ * Construye un array combinado con todas las opciones disponibles:
  *
- *   Modo 1 — Extractor dinámico (campo `extractor` presente):
- *     El addon extrae la URL .m3u8 fresca desde la fuente en cada solicitud.
- *     La URL extraída sí se cachea en memoria (TTL: extractor.cacheTTL, default 30 min).
- *     Soporta tipos: "iframe-chain" | "html-regex" (ver EXTRACTION.md).
+ *   1° opción — Stream capturado dinámicamente (extractor):
+ *     Si el canal tiene extractor configurado, la URL fresca va primero.
+ *     Se identifica con "(capturado)" en el título para debug en la UI de Stremio.
+ *     Incluye Referer automático derivado de la página fuente del stream.
  *
- *   Modo 2 — Streams estáticos (campo `streams[]`, sin extractor):
- *     Devuelve las URLs hardcodeadas en streams.json tal como están.
- *     Útil para URLs fijas o con tokens de larga duración renovados manualmente.
+ *   Opciones siguientes — Streams manuales (streams[]):
+ *     Las URLs hardcodeadas en streams.json, en el orden definido.
+ *     Se omiten entradas con url vacía (placeholders).
  */
 app.get('/stream/tv/:id.json', async (req, res) => {
   const channels = await getChannels();
@@ -357,43 +359,51 @@ app.get('/stream/tv/:id.json', async (req, res) => {
 
   if (!ch) return respond(res, { streams: [] }, 0);
 
-  // ── Modo 1: extractor dinámico ──────────────────────────────────────────
+  const streams = [];
+
+  // ── Opción 1: stream capturado dinámicamente (siempre va primero) ───────
   if (ch.extractor && ch.extractor.url && ch.extractor.type) {
-    const streamUrl = await extractStreamUrl(ch.extractor, ch.id);
+    const result = await extractStreamUrl(ch.extractor, ch.id);
 
-    if (streamUrl) {
-      return respond(res, {
-        streams: [{
-          title: ch.name,
-          url:   streamUrl,
-          behaviorHints: { notWebReady: false }
-        }]
-      }, 0);
+    if (result) {
+      streams.push({
+        // Etiqueta "(capturado)" para identificarlo fácilmente en la UI de Stremio
+        title: `${ch.name} (capturado)`,
+        url:   result.url,
+        behaviorHints: {
+          notWebReady: false,
+          // Referer derivado de la página fuente — necesario para que el CDN autorice la request
+          proxyHeaders: {
+            request: {
+              Referer:      result.referer,
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+          }
+        }
+      });
     }
-
-    // Extractor falló — continúa al Modo 2 para usar streams[] como fallback
-    console.warn(`[stream] Extractor falló para "${ch.id}" — usando streams[] como fallback`);
   }
 
-  // ── Modo 2: streams estáticos (sin extractor o como fallback) ───────────
-  if (!Array.isArray(ch.streams) || ch.streams.length === 0) {
-    return respond(res, { streams: [] }, 0);
-  }
+  // ── Opciones siguientes: streams manuales del JSON ───────────────────────
+  if (Array.isArray(ch.streams)) {
+    for (const s of ch.streams) {
+      // Omitir entradas con URL vacía (placeholders en el JSON)
+      if (!s.url) continue;
 
-  const streams = ch.streams.map(s => {
-    const stream = {
-      title: s.label || ch.name,
-      url:   s.url,
-      behaviorHints: { notWebReady: false }
-    };
+      const stream = {
+        title: s.label || ch.name,
+        url:   s.url,
+        behaviorHints: { notWebReady: false }
+      };
 
-    // Headers HTTP opcionales (ej: Referer, User-Agent) para streams que los requieren
-    if (s.headers && typeof s.headers === 'object') {
-      stream.behaviorHints.proxyHeaders = { request: s.headers };
+      // Headers HTTP opcionales (ej: Referer, User-Agent) para streams que los requieren
+      if (s.headers && typeof s.headers === 'object') {
+        stream.behaviorHints.proxyHeaders = { request: s.headers };
+      }
+
+      streams.push(stream);
     }
-
-    return stream;
-  });
+  }
 
   respond(res, { streams }, 0);
 });
