@@ -21,7 +21,8 @@ const app = express();
  * Cache-busting con timestamp para evitar CDN de GitHub.
  */
 const STREAMS_JSON_URL = process.env.STREAMS_JSON_URL ||
-  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/main/add-on/streams.json';
+  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/add-on/streams.json';
+// NOTA: si Vercel usa una variable de entorno STREAMS_JSON_URL, esa tiene prioridad sobre el default de arriba.
 
 /** TTL del caché en memoria — 5 minutos */
 const CACHE_TTL_MS = 5 * 60 * 1000;
