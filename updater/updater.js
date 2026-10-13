@@ -307,7 +307,7 @@ async function gitPush() {
   await git.addConfig('user.email', 'updater@local');
 
   // Solo stagear el streams.json del add-on
-  await git.add('add-on/streams.json');
+  await git.add('streams.json');
 
   const status = await git.status();
   if (!status.staged.length) {
