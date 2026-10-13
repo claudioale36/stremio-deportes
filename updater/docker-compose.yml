@@ -25,8 +25,10 @@ services:
       - 8.8.8.8
       - 1.1.1.1
     volumes:
-      # Repositorio del host — el updater escribe streams.json y hace push
-      - /mnt/Archivos2/sincronizados/only-pc/linux-and-windows/Programacion/Proyectos/stremio-addons/stremio-deportes:/app/repo
+      # Repositorio del host — el updater escribe streams.json y hace push.
+      # Ruta relativa al docker-compose.yml (updater/) → apunta a la raíz del repo.
+      # Usar relativa evita rutas hardcodeadas que fallan si el proyecto cambia de ubicación.
+      - ../:/app/repo
       # Claves SSH del host — solo lectura, para autenticar el git push
       - ~/.ssh:/root/.ssh:ro
     environment:
