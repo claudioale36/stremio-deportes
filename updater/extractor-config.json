@@ -1,0 +1,112 @@
+{
+  "channels": [
+    {
+      "id": "fox-sports",
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://tvf90.com/online.php?stream=foxsports",
+        "url2": "https://futbollibre.mom/canal/fox-sports",
+        "depth": 2
+      }
+    },
+    {
+      "id": "disney-+",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "Disney+",
+        "preferHD": false,
+        "url": "https://la18hd.su/vivo/canales.php?stream=espn",
+        "url2": "https://tvf90.com/online.php?stream=espn",
+        "depth": 1
+      }
+    },
+    {
+      "id": "espn-1",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "ESPN",
+        "preferHD": true,
+        "url": "https://futbollibre.mom/canal/espn",
+        "depth": 1
+      }
+    },
+    {
+      "id": "espn-2",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "ESPN 2",
+        "preferHD": true,
+        "url": "https://tvf90.com/online.php?stream=espn2",
+        "url2": "https://futbollibre.mom/canal/espn-2",
+        "depth": 1
+      }
+    },
+    {
+      "id": "espn-3",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "ESPN 3",
+        "preferHD": true,
+        "url": "https://futbollibre.mom/canal/espn-3",
+        "depth": 1
+      }
+    },
+    {
+      "id": "espn-premium",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "ESPN Premium",
+        "preferHD": true,
+        "url": "https://futbollibre.mom/canal/liga-1-max",
+        "depth": 1
+      }
+    },
+    {
+      "id": "tyc-sports",
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://futbollibre.mom/canal/tyc-sports",
+        "url2": "https://tvf90.com/1.php?stream=tycsports",
+        "depth": 2
+      }
+    },
+    {
+      "id": "tnt-sports",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "TNT Sports",
+        "preferHD": true,
+        "url": "https://tvf90.com/online.php?stream=tntsports",
+        "url2": "https://futbollibre.mom/canal/tnt-sports",
+        "depth": 1
+      }
+    },
+    {
+      "id": "d-sports-premium",
+      "extractor": {
+        "type": "api-embed",
+        "channelName": "DSports",
+        "preferHD": false,
+        "url": "https://tvf90.com/online.php?stream=dsports",
+        "url2": "https://futbollibre.mom/canal/dsports",
+        "depth": 1
+      }
+    },
+    {
+      "id": "dazn-f1",
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://deporflix.pe/canales/dazn-f1/",
+        "depth": 2
+      }
+    },
+    {
+      "id": "sportv3",
+      "extractor": {
+        "type": "iframe-chain",
+        "url": "https://deporflix.pe/canales/sportv-3/",
+        "depth": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# docker-compose.yml — stremio-deportes-updater
+#
+# Volúmenes montados:
+#   /app/repo  → el repo clonado en el host (lectura/escritura para git push)
+#   /root/.ssh → claves SSH del host (solo lectura — para autenticar el push)
+#
+# Arranque:
+#   docker compose up -d --build
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  stremio-updater:
+    build: .
+    container_name: stremio-updater
+    restart: unless-stopped
+    volumes:
+      # Repositorio del host — el updater escribe streams.json y hace push
+      - /mnt/Archivos2/sincronizados/only-pc/linux-and-windows/Programacion/Proyectos/stremio-addons/stremio-deportes:/app/repo
+      # Claves SSH del host — solo lectura, para autenticar el git push
+      - ~/.ssh:/root/.ssh:ro
+    environment:
+      REPO_PATH:              /app/repo
+      STREAMS_JSON_PATH:      /app/repo/add-on/streams.json
+      EXTRACTOR_CONFIG_PATH:  /app/updater/extractor-config.json
+      UPDATE_INTERVAL_HOURS:  "3"
+      MAX_TOKEN_AGE_HOURS:    "3"

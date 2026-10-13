@@ -1,0 +1,11 @@
+{
+  "name": "stremio-deportes-updater",
+  "version": "1.0.0",
+  "description": "Servicio Docker que extrae URLs .m3u8 frescas y actualiza add-on/streams.json cada 3 horas",
+  "main": "updater.js",
+  "engines": { "node": ">=18" },
+  "scripts": { "start": "node updater.js" },
+  "dependencies": {
+    "simple-git": "^3.27.0"
+  }
+}
