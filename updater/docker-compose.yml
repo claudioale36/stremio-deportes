@@ -21,7 +21,7 @@ services:
       - ~/.ssh:/root/.ssh:ro
     environment:
       REPO_PATH:              /app/repo
-      STREAMS_JSON_PATH:      /app/repo/add-on/streams.json
+      STREAMS_JSON_PATH:      /app/repo/streams.json
       EXTRACTOR_CONFIG_PATH:  /app/updater/extractor-config.json
       UPDATE_INTERVAL_HOURS:  "3"
       MAX_TOKEN_AGE_HOURS:    "3"

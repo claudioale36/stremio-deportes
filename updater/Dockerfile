@@ -22,7 +22,7 @@ COPY extractor-config.json .
 
 # Variables de entorno con defaults — sobreescribibles en docker-compose.yml
 ENV REPO_PATH=/app/repo
-ENV STREAMS_JSON_PATH=/app/repo/add-on/streams.json
+ENV STREAMS_JSON_PATH=/app/repo/streams.json
 ENV EXTRACTOR_CONFIG_PATH=/app/updater/extractor-config.json
 ENV UPDATE_INTERVAL_HOURS=3
 ENV MAX_TOKEN_AGE_HOURS=3

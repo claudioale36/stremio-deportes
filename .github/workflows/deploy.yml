@@ -59,7 +59,7 @@ jobs:
       - name: Deploy Docker
         run: |
           set -e
-          cd "$DEPLOY_DIR/add-on"
+          cd "$DEPLOY_DIR"
 
           echo "== docker pull (imágenes base) =="
           docker compose pull
