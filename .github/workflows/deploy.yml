@@ -1,0 +1,77 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - claudio/main
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEPLOY_DIR: /home/github-runner/deploys/stremio-deportes # <- única línea a cambiar por proyecto
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+
+      - name: Verificar directorio de deploy
+        run: |
+          echo "=== IDENTIDAD DEL PROCESO ==="
+          id
+          echo ""
+          echo "=== STAT DEL TARGET ==="
+          stat "$DEPLOY_DIR" 2>&1 || echo "stat falló"
+          echo ""
+          echo "=== TRAVERSE CHAIN ==="
+          stat /home/fipanel 2>&1 || echo "no puedo stat /home/fipanel"
+          stat /home/fipanel/fipanel-compartida 2>&1 || echo "no puedo stat fipanel-compartida"
+          echo ""
+          if [ ! -d "$DEPLOY_DIR" ]; then
+            echo "ERROR: DEPLOY_DIR no existe: $DEPLOY_DIR"
+            exit 1
+          fi
+
+      - name: Mostrar información
+        run: |
+          echo "Proyecto : "$DEPLOY_DIR""
+          echo "Runner   : $(hostname)"
+          echo "Usuario  : $(whoami)"
+
+      - name: Actualizar código
+        run: |
+          set -e
+
+          echo "== Decirle a Github-Runner que confie en el repositorio =="
+          git config --global --add safe.directory "$DEPLOY_DIR"
+
+          cd "$DEPLOY_DIR"
+
+          echo "== git fetch =="
+          git fetch origin
+
+          echo "== git reset =="
+          git reset --hard origin/claudio/main
+
+      - name: Deploy Docker
+        run: |
+          set -e
+          cd "$DEPLOY_DIR/add-on"
+
+          echo "== docker pull (imágenes base) =="
+          docker compose pull
+
+          echo "== docker build y eliminamos contenedores huérfanos=="
+          docker compose up -d --build --remove-orphans
+
+      - name: Verificar estado
+        run: |
+          cd "$DEPLOY_DIR"
+          docker compose ps
+
+      - name: Información Final
+        run: |
+          echo "Deploy finalizado"
