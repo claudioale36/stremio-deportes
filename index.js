@@ -97,9 +97,9 @@ const MANIFEST = {
     }
   ],
   resources: [
-    'catalog',
-    { name: 'meta',   types: ['tv'], idPrefixes: ['deportes-'] },
-    { name: 'stream', types: ['tv'], idPrefixes: ['deportes-'] }
+    { name: 'catalog', types: ['tv'] },
+    { name: 'meta',    types: ['tv'], idPrefixes: ['deportes-'] },
+    { name: 'stream',  types: ['tv'], idPrefixes: ['deportes-'] }
   ],
   behaviorHints: { configurable: false }
 };

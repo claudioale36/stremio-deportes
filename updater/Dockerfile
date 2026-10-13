@@ -4,27 +4,28 @@
 # y hace push a GitHub cada 3 horas via SSH.
 # El repositorio se monta como volumen — el contenedor no clona nada.
 #
-# Operaciones de red en el build (mínimas):
-#   1. apk add  → git + openssh desde mirrors Alpine
-#   2. npm ci   → simple-git desde npm (usa package-lock.json, sin resolver deps)
+# Usa node:18-slim (Debian) en lugar de Alpine porque los mirrors de Alpine
+# son inaccesibles desde la red del servidor.
 # ─────────────────────────────────────────────────────────────────────────────
 
-FROM node:18-alpine
+FROM node:18-slim
 
 # git + openssh: requeridos por simple-git para el push a GitHub
-RUN apk add --no-cache git openssh-client
+# apt-get tiene mirrors Debian ampliamente disponibles
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      git \
+      openssh-client \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app/updater
 
 # Copiar lockfile antes que el código — si no cambia, Docker reutiliza esta capa
-# Requiere package-lock.json generado localmente con: npm install --production
 COPY package.json package-lock.json ./
 
 # npm ci: instala exactamente lo que dice el lockfile, sin resolver nada
-# Mucho más rápido que npm install y reproducible
 RUN npm ci --omit=dev
 
-# Código y config (estas capas cambian seguido, van al final para aprovechar caché)
+# Código y config (capas que cambian seguido — van al final para aprovechar caché)
 COPY updater.js .
 COPY extractor-config.json .
 
