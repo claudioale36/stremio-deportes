@@ -24,6 +24,7 @@ const app = express();
  */
 const STREAMS_JSON_URL = process.env.STREAMS_JSON_URL ||
   'https://raw.githubusercontent.com/claudioale36/stremio-deportes/add-on/streams.json';
+// NOTA: si Vercel usa una variable de entorno STREAMS_JSON_URL, esa tiene prioridad sobre el default de arriba.
 
 /** TTL del caché en memoria — 5 minutos */
 const CACHE_TTL_MS = 5 * 60 * 1000;
@@ -192,3 +193,9 @@ app.get('/stream/tv/:id.json', async (req, res) => {
 
 /** Exportar para Vercel (serverless handler) */
 module.exports = (req, res) => app(req, res);
+
+/** Arranque local: node index.js */
+if (require.main === module) {
+  const PORT = process.env.PORT || 7001;
+  app.listen(PORT, () => console.log(`\n🟢 Addon en http://localhost:${PORT}/manifest.json\n`));
+}
