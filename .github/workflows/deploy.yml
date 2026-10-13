@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - claudio/main
+      - main
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -54,7 +54,7 @@ jobs:
           git fetch origin
 
           echo "== git reset =="
-          git reset --hard origin/claudio/main
+          git reset --hard origin/main
 
       - name: Deploy Docker
         run: |
