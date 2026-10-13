@@ -4,8 +4,8 @@
  *              Sirve los canales definidos en streams.json — mantenido automáticamente
  *              por el servicio updater (Docker local). Sin lógica de extracción.
  * @usage       Vercel serverless — auto-detectado como función por estar en api/.
- *              Desarrollo local: usar ../index.js con `node index.js`
- * @data        add-on/streams.json — URLs frescas escritas cada 3h por el updater.
+ *              Desarrollo local: node api/index.js
+ * @data        streams.json en la raíz del repo — URLs frescas escritas cada 3h por el updater.
  */
 
 'use strict';
@@ -23,8 +23,7 @@ const app = express();
  * Sobreescribible con la variable de entorno STREAMS_JSON_URL en Vercel.
  */
 const STREAMS_JSON_URL = process.env.STREAMS_JSON_URL ||
-  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/add-on/streams.json';
-// NOTA: si Vercel usa una variable de entorno STREAMS_JSON_URL, esa tiene prioridad sobre el default de arriba.
+  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/main/streams.json';
 
 /** TTL del caché en memoria — 5 minutos */
 const CACHE_TTL_MS = 5 * 60 * 1000;
@@ -170,7 +169,6 @@ app.get('/stream/tv/:id.json', async (req, res) => {
 
   if (!ch) return respond(res, { streams: [] }, 0);
 
-  // Filtrar slots vacíos — el updater puede no haber corrido aún
   const streams = (ch.streams || [])
     .filter(s => s.url)
     .map(s => {
@@ -179,7 +177,6 @@ app.get('/stream/tv/:id.json', async (req, res) => {
         url:           s.url,
         behaviorHints: { notWebReady: false }
       };
-      // Headers opcionales (Referer, User-Agent) escritos por el updater o el usuario
       if (s.headers && typeof s.headers === 'object') {
         stream.behaviorHints.proxyHeaders = { request: s.headers };
       }
@@ -194,7 +191,7 @@ app.get('/stream/tv/:id.json', async (req, res) => {
 /** Exportar para Vercel (serverless handler) */
 module.exports = (req, res) => app(req, res);
 
-/** Arranque local: node index.js */
+/** Arranque local: node api/index.js */
 if (require.main === module) {
   const PORT = process.env.PORT || 7001;
   app.listen(PORT, () => console.log(`\n🟢 Addon en http://localhost:${PORT}/manifest.json\n`));
