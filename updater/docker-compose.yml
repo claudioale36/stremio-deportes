@@ -11,7 +11,12 @@
 
 services:
   stremio-updater:
-    build: .
+    build:
+      context: .
+      # network: host — BuildKit usa la red del host durante el build,
+      # heredando su DNS. Sin esto, apt-get update falla (exit 100) porque
+      # el namespace de red de BuildKit no resuelve mirrors externos.
+      network: host
     container_name: stremio-updater
     restart: unless-stopped
     # DNS explícito para el build y runtime — evita que el daemon use el resolver
