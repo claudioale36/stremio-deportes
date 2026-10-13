@@ -7,14 +7,26 @@
 
 FROM node:18-alpine
 
-# Instalar git (requerido por simple-git para hacer push)
+# Instalar git y openssh (requeridos por simple-git para hacer push)
+# Se combinan en un solo RUN para reducir capas
 RUN apk add --no-cache git openssh-client
 
 WORKDIR /app/updater
 
-# Instalar solo dependencias de producción
-COPY package.json .
-RUN npm install --production --silent
+# Copiar lockfile primero — si no cambió, npm ci usa el caché de capas Docker
+# y el build tarda segundos en vez de minutos.
+# Si no tenés package-lock.json: corré `npm install --production` en tu máquina
+# y commitea el lockfile antes de buildear.
+COPY package.json package-lock.json ./
+
+# npm ci usa el lockfile: más rápido, reproducible y sin resolver deps desde cero.
+# --omit=dev equivale a --production (sintaxis moderna de npm).
+# Se setea el registry explícito y un timeout razonable para evitar cuelgues en Alpine.
+RUN pnpm ci --omit=dev \
+      --registry=https://registry.pnpmjs.org/ \
+      --fetch-timeout=60000 \
+      --fetch-retry-mintimeout=10000 \
+      --fetch-retry-maxtimeout=60000
 
 # Copiar el script y la config de extractores
 COPY updater.js .
