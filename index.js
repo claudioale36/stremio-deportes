@@ -23,7 +23,7 @@ const app = express();
  * Sobreescribible con la variable de entorno STREAMS_JSON_URL en Vercel.
  */
 const STREAMS_JSON_URL = process.env.STREAMS_JSON_URL ||
-  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/streams.json';
+  'https://raw.githubusercontent.com/claudioale36/stremio-deportes/main/streams.json';
 
 /** TTL del caché en memoria — 5 minutos */
 const CACHE_TTL_MS = 5 * 60 * 1000;

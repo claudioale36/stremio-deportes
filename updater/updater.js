@@ -298,6 +298,7 @@ async function extractAll() {
 /**
  * Hace git add + commit + push del streams.json actualizado.
  * Usa las claves SSH del host montadas en /root/.ssh (volumen Docker).
+ * La rama se detecta dinámicamente desde el repo montado — no está hardcodeada.
  */
 async function gitPush() {
   const git = simpleGit(REPO_PATH);
@@ -306,8 +307,13 @@ async function gitPush() {
   await git.addConfig('user.name',  'stremio-updater');
   await git.addConfig('user.email', 'updater@local');
 
-  // Solo stagear el streams.json del add-on
-  await git.add('streams.json');
+  // Detectar la rama actual del repo en vez de hardcodear 'main'
+  const currentBranch = (await git.revparse(['--abbrev-ref', 'HEAD'])).trim();
+  console.log(`[git] Rama activa: ${currentBranch}`);
+
+  // Stagear el streams.json (ruta relativa a REPO_PATH)
+  const streamsRelPath = require('path').relative(REPO_PATH, STREAMS_JSON_PATH);
+  await git.add(streamsRelPath);
 
   const status = await git.status();
   if (!status.staged.length) {
@@ -317,9 +323,9 @@ async function gitPush() {
 
   const timestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
   await git.commit(`chore: actualizar streams.json [${timestamp}]`);
-  await git.push('origin', 'main');
+  await git.push('origin', currentBranch);
 
-  console.log('[git] ✅ Push exitoso');
+  console.log(`[git] ✅ Push exitoso → origin/${currentBranch}`);
 }
 
 // ─── Ciclo de vida ────────────────────────────────────────────────────────────
