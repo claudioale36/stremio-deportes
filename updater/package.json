@@ -6,6 +6,6 @@
   "engines": { "node": ">=18" },
   "scripts": { "start": "node updater.js" },
   "dependencies": {
-    "simple-git": "^3.27.0"
+    "simple-git": "^4.0.2"
   }
 }
