@@ -6,15 +6,24 @@
 #
 # Usa node:18-slim (Debian) en lugar de Alpine porque los mirrors de Alpine
 # son inaccesibles desde la red del servidor.
+#
+# Incluye Chromium para que Puppeteer pueda ejecutar el JS de las páginas
+# de streaming y capturar el token real (fetch() solo lee el HTML estático
+# y obtiene un placeholder que ftlly.com rechaza con 403).
 # ─────────────────────────────────────────────────────────────────────────────
 
 FROM node:18-slim
 
 # git + openssh: requeridos por simple-git para el push a GitHub
-# apt-get tiene mirrors Debian ampliamente disponibles
+# chromium: browser headless para Puppeteer — ejecuta el JS que genera los tokens
+# ca-certificates: necesario para que Chromium valide HTTPS correctamente
+# fonts-liberation: fuentes mínimas para que Chromium no crashee en Linux headless
 RUN apt-get update && apt-get install -y --no-install-recommends \
       git \
       openssh-client \
+      chromium \
+      ca-certificates \
+      fonts-liberation \
     && rm -rf /var/lib/apt/lists/*
 
 # Git 2.35.2+ rechaza repos owned por otro usuario ("dubious ownership").
@@ -28,6 +37,7 @@ WORKDIR /app/updater
 COPY package.json package-lock.json ./
 
 # npm ci: instala exactamente lo que dice el lockfile, sin resolver nada
+# puppeteer-core no descarga Chromium propio — usa el del sistema (/usr/bin/chromium)
 RUN npm ci --omit=dev
 
 # Código y config (capas que cambian seguido — van al final para aprovechar caché)
@@ -39,5 +49,7 @@ ENV STREAMS_JSON_PATH=/app/repo/streams.json
 ENV EXTRACTOR_CONFIG_PATH=/app/updater/extractor-config.json
 ENV UPDATE_INTERVAL_HOURS=3
 ENV MAX_TOKEN_AGE_HOURS=3
+# Ruta al binario de Chromium instalado por apt — puppeteer-core lo requiere explícito
+ENV CHROMIUM_PATH=/usr/bin/chromium
 
 CMD ["node", "updater.js"]

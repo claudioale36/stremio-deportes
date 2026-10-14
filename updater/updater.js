@@ -1,19 +1,22 @@
 /**
  * @file        updater.js
  * @description Servicio de actualización automática de streams para el Add-On de Stremio.
- *              Extrae URLs .m3u8 frescas usando la lógica de extracción (iframe-chain, api-embed)
- *              desde la IP del hogar (evita el bloqueo 403 que ocurría en Vercel), escribe
- *              el resultado en add-on/streams.json y hace push al repositorio GitHub vía SSH.
+ *              Extrae URLs .m3u8 frescas usando Puppeteer (browser headless) para ejecutar
+ *              el JS de las páginas de streaming y capturar el token real generado en runtime.
+ *              fetch() solo descarga HTML estático — los tokens reales los genera JS en el browser.
+ *              Escribe el resultado en streams.json y hace push al repositorio GitHub vía SSH.
  * @usage       node updater.js (dentro del contenedor Docker)
  * @data        updater/extractor-config.json — config de fuentes por canal.
  *              streams.json (raíz del repo) — escribe URLs frescas en el slot "HD (auto)" de cada canal.
  *              FORCE_UPDATE=1 — env var para forzar extracción inmediata al arrancar (bypass del chequeo de edad).
+ *              CHROMIUM_PATH — ruta al binario de Chromium (default: /usr/bin/chromium).
  */
 
 'use strict';
 
 const fs        = require('fs');
 const path      = require('path');
+const puppeteer = require('puppeteer-core');
 const { simpleGit } = require('simple-git');
 
 // ─── Configuración ────────────────────────────────────────────────────────────
@@ -24,7 +27,7 @@ const REPO_PATH = process.env.REPO_PATH ||
 
 /** Ruta al streams.json que lee el Add-On */
 const STREAMS_JSON_PATH = process.env.STREAMS_JSON_PATH ||
-  path.join(REPO_PATH, 'add-on', 'streams.json');
+  path.join(REPO_PATH, 'streams.json');
 
 /** Ruta a la config de extractores (solo la lee el updater) */
 const EXTRACTOR_CONFIG_PATH = process.env.EXTRACTOR_CONFIG_PATH ||
@@ -35,6 +38,13 @@ const UPDATE_INTERVAL_HOURS = parseFloat(process.env.UPDATE_INTERVAL_HOURS || '3
 
 /** Si los streams tienen más edad que esto al arrancar, extrae inmediatamente */
 const MAX_TOKEN_AGE_HOURS = parseFloat(process.env.MAX_TOKEN_AGE_HOURS || '3');
+
+/**
+ * Ruta al binario de Chromium instalado en el sistema.
+ * puppeteer-core no incluye Chromium propio — requiere que esté instalado por separado.
+ * En el Dockerfile se instala via apt (chromium) y queda en /usr/bin/chromium.
+ */
+const CHROMIUM_PATH = process.env.CHROMIUM_PATH || '/usr/bin/chromium';
 
 // ─── Caché de la API de agenda ────────────────────────────────────────────────
 
@@ -47,6 +57,7 @@ let _diariesCacheTs = 0;
 /**
  * Obtiene y cachea el listado de embeds únicos desde la API de agenda.
  * Aplana todos los embeds de todos los eventos en un array deduplicado.
+ * Este fetch() sí es correcto — es una API JSON pura, sin JS que ejecutar.
  * @returns {Promise<Array<{name: string, iframe: string}>>}
  */
 async function getDiariesEmbeds() {
@@ -91,10 +102,90 @@ function normalizeName(s) {
     .trim();
 }
 
-// ─── Funciones de extracción ──────────────────────────────────────────────────
+// ─── Extracción con browser headless ─────────────────────────────────────────
+
+/**
+ * Usa Puppeteer (Chromium headless) para navegar a la URL e interceptar
+ * la primera request de red a un .m3u8 o .mpd.
+ *
+ * ¿Por qué esto en lugar de fetch()?
+ * Las páginas de streaming (tvf90.com/5.php, etc.) generan el token vía JS:
+ *   fetch() descarga el HTML → encuentra un token placeholder corto → ftlly.com devuelve 403
+ *   Puppeteer ejecuta el JS → el player genera el token real con timestamps → token válido
+ *
+ * @param {string}  startUrl - URL de la página que contiene el player de video
+ * @param {Browser} browser  - Instancia de Puppeteer compartida entre canales (reutilizar)
+ * @returns {Promise<{url: string, referer: string}|null>}
+ */
+async function extractWithBrowser(startUrl, browser) {
+  const page = await browser.newPage();
+
+  try {
+    // User-Agent de Chrome real — algunos servidores bloquean headless explícitamente
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    );
+
+    // Silenciar dialogs (alert/confirm) que podrían bloquear la carga
+    page.on('dialog', async dialog => dialog.dismiss().catch(() => {}));
+
+    let capturedUrl     = null;
+    let capturedReferer = startUrl;
+    let resolveCapture;
+
+    // Promesa que se resuelve en cuanto interceptamos el stream
+    const streamFoundPromise = new Promise(resolve => { resolveCapture = resolve; });
+
+    // Activar intercepción de requests — captura TODAS las requests de la página e iframes
+    await page.setRequestInterception(true);
+    page.on('request', interceptedReq => {
+      const url = interceptedReq.url();
+
+      if (!capturedUrl && url.match(/\.(?:m3u8|mpd)/i)) {
+        // Primera request al CDN — este es el token real generado por el JS del player
+        capturedUrl     = url;
+        capturedReferer = interceptedReq.headers()['referer'] || startUrl;
+
+        interceptedReq.abort(); // No necesitamos que el stream cargue, solo la URL
+        resolveCapture({ url: capturedUrl, referer: capturedReferer });
+      } else {
+        // Dejar pasar todas las demás requests (JS, CSS, etc.)
+        interceptedReq.continue().catch(() => {});
+      }
+    });
+
+    // Timeout total de 25s — si el player no carga el stream en ese tiempo, falla
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Timeout (25s): no se interceptó stream')), 25_000)
+    );
+
+    // Iniciar navegación — ignorar ERR_ABORTED (causado cuando abortamos el stream)
+    page.goto(startUrl, { waitUntil: 'domcontentloaded', timeout: 20_000 })
+      .catch(() => {});
+
+    // Esperar a que se capture el stream o se agote el timeout
+    return await Promise.race([streamFoundPromise, timeoutPromise]);
+
+  } catch (err) {
+    if (err.message.includes('Timeout')) {
+      console.warn(`    [browser] ⏱️  ${err.message}`);
+      return null;
+    }
+    throw err;
+  } finally {
+    // Cerrar la page pero no el browser — el browser se reutiliza entre canales
+    await page.close().catch(() => {});
+  }
+}
+
+// ─── Funciones de extracción (legacy — mantenidas como referencia) ─────────────
+// Estas funciones fetch-based ya no se usan para la extracción principal
+// porque no ejecutan JS. Se conservan por si se necesitan para fuentes
+// que sí devuelvan la URL directamente en el HTML (sin JS dinámico).
 
 /**
  * Hace fetch a una URL y extrae la primera URL .m3u8 o .mpd del HTML.
+ * NOTA: solo funciona si la URL está hardcodeada en el HTML (sin JS).
  * @param {string} url
  * @param {object} headers
  * @returns {Promise<{url: string, referer: string}|null>}
@@ -109,7 +200,7 @@ async function fetchAndExtractM3u8(url, headers) {
 
 /**
  * Sigue la cadena de iframes nivel a nivel hasta encontrar un .m3u8.
- * Actualiza el Referer en cada salto para imitar el comportamiento del browser.
+ * NOTA: solo funciona si la URL está en el HTML estático (sin JS).
  * @param {string} startUrl
  * @param {object} headers
  * @param {number} maxDepth
@@ -147,35 +238,38 @@ async function followIframeChain(startUrl, headers, maxDepth) {
   return null;
 }
 
+// ─── Lógica de extracción por tipo ────────────────────────────────────────────
+
 /**
- * Extrae stream usando la API de agenda (api-embed).
- * Decodifica el base64 del embed_iframe y sigue la cadena resultante.
- * Prioriza la variante hd.php si preferHD es true.
- * @param {string}  channelName
- * @param {boolean} preferHD
- * @param {number}  depth
- * @param {object}  headers
+ * Extrae la URL del stream para un canal tipo "api-embed":
+ * 1. Consulta la API de agenda para obtener el embed del canal (fetch — API pura, no JS)
+ * 2. Decodifica la URL tvf90.com del base64
+ * 3. Usa el browser para navegar a esa URL e interceptar el token real
+ *
+ * @param {object}  extractor - Config del extractor (desde extractor-config.json)
+ * @param {Browser} browser   - Instancia de Puppeteer compartida
  * @returns {Promise<{url: string, referer: string}|null>}
  */
-async function fetchFromDiariesApi(channelName, preferHD, depth, headers) {
+async function fetchFromDiariesApi(extractor, browser) {
   const embeds = await getDiariesEmbeds();
-  const target = normalizeName(channelName);
+  const target = normalizeName(extractor.channelName);
 
-  // Comparar por nombre base del embed (antes del primer separador)
+  // Buscar el embed que corresponde al canal por nombre normalizado
   const matching = embeds.filter(e => normalizeName(e.name.split(/[|\u2503]/)[0]) === target);
 
   if (!matching.length) {
-    console.warn(`    [api-embed] Sin embed para "${channelName}" en la agenda de hoy`);
+    console.warn(`    [api-embed] Sin embed para "${extractor.channelName}" en la agenda de hoy`);
     return null;
   }
 
+  // Preferir la variante hd.php si existe y preferHD no está desactivado
   let chosen = matching[0];
-  if (preferHD) {
+  if (extractor.preferHD !== false) {
     const hd = matching.find(e => e.iframe.includes('hd.php'));
     if (hd) { chosen = hd; console.log(`    [api-embed] Usando variante HD`); }
   }
 
-  // Extraer y decodificar el parámetro ?r= (URL en base64)
+  // Extraer y decodificar el parámetro ?r= (URL tvf90.com en base64)
   const rMatch = chosen.iframe.match(/[?&]r=([^&\s]+)/);
   if (!rMatch) return null;
 
@@ -187,40 +281,38 @@ async function fetchFromDiariesApi(channelName, preferHD, depth, headers) {
   }
 
   console.log(`    [api-embed] URL decodificada: ${tvfUrl}`);
-  return await followIframeChain(tvfUrl, headers, depth);
+
+  // Navegar con el browser al embed de tvf90.com — aquí el JS genera el token real
+  return await extractWithBrowser(tvfUrl, browser);
 }
 
 /**
  * Ejecuta la estrategia de extracción según el tipo configurado.
+ * Todos los tipos usan Puppeteer para ejecutar el JS del player y capturar el token real.
+ *
  * Soporta: "html-regex" | "iframe-chain" | "api-embed"
- * @param {object} extractor - Config del extractor (desde extractor-config.json)
- * @param {string} channelId
+ *
+ * @param {object}  extractor  - Config del extractor (desde extractor-config.json)
+ * @param {string}  channelId
+ * @param {Browser} browser    - Instancia de Puppeteer compartida entre canales
  * @returns {Promise<{url: string, referer: string}|null>}
  */
-async function extractStreamUrl(extractor, channelId) {
-  // Headers que imitan un browser real — necesarios para que los servidores respondan
-  const baseHeaders = {
-    'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept':          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'es-AR,es;q=0.9,en;q=0.8'
-  };
-
-  if (extractor.type === 'html-regex') {
-    return await fetchAndExtractM3u8(extractor.url, baseHeaders);
-  }
-
-  if (extractor.type === 'iframe-chain') {
-    if (!extractor.url) { console.warn(`  [extractor] URL vacía para ${channelId}`); return null; }
-    return await followIframeChain(extractor.url, baseHeaders, extractor.depth || 2);
+async function extractStreamUrl(extractor, channelId, browser) {
+  if (extractor.type === 'html-regex' || extractor.type === 'iframe-chain') {
+    if (!extractor.url) {
+      console.warn(`  [extractor] URL vacía para ${channelId}`);
+      return null;
+    }
+    // El browser navega al startUrl y deja que el JS del player construya la URL real;
+    // los iframes internos también se cargan automáticamente (Puppeteer los maneja)
+    console.log(`    [browser] Navegando a: ${extractor.url}`);
+    return await extractWithBrowser(extractor.url, browser);
   }
 
   if (extractor.type === 'api-embed') {
-    return await fetchFromDiariesApi(
-      extractor.channelName,
-      extractor.preferHD !== false,
-      extractor.depth || 1,
-      baseHeaders
-    );
+    // La API de la agenda se consulta con fetch (es JSON puro, sin JS);
+    // solo el último paso (cargar el embed de tvf90.com) necesita el browser
+    return await fetchFromDiariesApi(extractor, browser);
   }
 
   console.warn(`[extractor] Tipo desconocido: ${extractor.type}`);
@@ -259,7 +351,9 @@ async function checkGitHubAuth() {
 
 /**
  * Extrae todos los canales configurados y actualiza streams.json.
- * Escribe la URL fresca en el slot con label "HD (auto)" de cada canal.
+ * Escribe la URL fresca en el slot con label "HD (auto)" de cada canal,
+ * junto con los headers (Referer) necesarios para que Stremio los envíe al CDN.
+ * Usa una única instancia de browser Chromium compartida entre todos los canales.
  * Al finalizar, actualiza lastUpdated y hace push al repo.
  */
 async function extractAll() {
@@ -291,55 +385,87 @@ async function extractAll() {
     return;
   }
 
+  // ── Lanzar browser Chromium — una instancia compartida para todos los canales ──
+  // Reutilizarla evita el overhead de arrancar Chromium (~2-3s) por cada canal.
+  // Se cierra en el bloque finally para garantizar que no queden procesos huérfanos.
+  console.log(`[browser] Lanzando Chromium: ${CHROMIUM_PATH}`);
+  const browser = await puppeteer.launch({
+    executablePath: CHROMIUM_PATH,
+    headless:        true,
+    args: [
+      '--no-sandbox',             // Requerido en Docker (el contenedor corre como root)
+      '--disable-setuid-sandbox', // Ídem
+      '--disable-dev-shm-usage',  // Evita crashes por falta de memoria compartida en Docker
+      '--disable-gpu',            // Sin GPU en servidor headless
+      '--mute-audio',             // No reproducir audio durante la extracción
+      '--no-zygote',              // Evita procesos zombie en entornos con pid namespace restringido
+    ]
+  });
+  console.log('[browser] ✅ Chromium iniciado');
+
   const total          = config.length;
   let   updated        = 0;
   let   failed         = 0;
   const failedChannels = [];
 
-  for (let i = 0; i < config.length; i++) {
-    const channelConfig = config[i];
-    const channel = streamsData.channels.find(c => c.id === channelConfig.id);
+  try {
+    for (let i = 0; i < config.length; i++) {
+      const channelConfig = config[i];
+      const channel = streamsData.channels.find(c => c.id === channelConfig.id);
 
-    if (!channel) {
-      console.warn(`\n[updater] [${i + 1}/${total}] Canal "${channelConfig.id}" no en streams.json — omitiendo`);
-      continue;
-    }
-
-    console.log(`\n[updater] [${i + 1}/${total}] → ${channel.name} (${channelConfig.id})`);
-
-    try {
-      const result = await extractStreamUrl(channelConfig.extractor, channelConfig.id);
-
-      if (result) {
-        // Buscar el slot "HD (auto)" que espera la URL fresca
-        const autoSlot = (channel.streams || []).find(s => s.label === 'HD (auto)');
-
-        if (!autoSlot) {
-          console.warn(`  ⚠️  No se encontró slot "HD (auto)" para ${channel.name} — omitiendo`);
-          continue;
-        }
-
-        const oldUrl = autoSlot.url || '(vacío)';
-
-        autoSlot.url       = result.url;
-        autoSlot.referer   = result.referer; // guardado en el JSON para debug
-        autoSlot.updatedAt = new Date().toISOString();
-
-        console.log(`  ANTERIOR: ${oldUrl.substring(0, 80)}`);
-        console.log(`  NUEVO:    ${result.url.substring(0, 80)}`);
-        updated++;
-
-      } else {
-        console.warn(`  ⚠️  No se pudo extraer URL — slot sin cambios`);
-        failed++;
-        failedChannels.push(channel.name);
+      if (!channel) {
+        console.warn(`\n[updater] [${i + 1}/${total}] Canal "${channelConfig.id}" no en streams.json — omitiendo`);
+        continue;
       }
 
-    } catch (err) {
-      console.error(`  ❌ Error: ${err.message}`);
-      failed++;
-      failedChannels.push(`${channel.name} (${err.message.substring(0, 60)})`);
+      console.log(`\n[updater] [${i + 1}/${total}] → ${channel.name} (${channelConfig.id})`);
+
+      try {
+        // Pasar el browser compartido para que la extracción pueda abrir una nueva page
+        const result = await extractStreamUrl(channelConfig.extractor, channelConfig.id, browser);
+
+        if (result) {
+          // Buscar el slot "HD (auto)" que espera la URL fresca
+          const autoSlot = (channel.streams || []).find(s => s.label === 'HD (auto)');
+
+          if (!autoSlot) {
+            console.warn(`  ⚠️  No se encontró slot "HD (auto)" para ${channel.name} — omitiendo`);
+            continue;
+          }
+
+          const oldUrl = autoSlot.url || '(vacío)';
+
+          autoSlot.url       = result.url;
+          // Guardar Referer y User-Agent como headers para que index.js los envíe a Stremio
+          // via behaviorHints.proxyHeaders.request — el CDN puede requerir el Referer correcto
+          autoSlot.headers   = {
+            'Referer':    result.referer,
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          };
+          autoSlot.updatedAt = new Date().toISOString();
+
+          console.log(`  ANTERIOR: ${oldUrl.substring(0, 80)}`);
+          console.log(`  NUEVO:    ${result.url.substring(0, 80)}`);
+          console.log(`  REFERER:  ${result.referer}`);
+          updated++;
+
+        } else {
+          console.warn(`  ⚠️  No se pudo extraer URL — slot sin cambios`);
+          failed++;
+          failedChannels.push(channel.name);
+        }
+
+      } catch (err) {
+        console.error(`  ❌ Error: ${err.message}`);
+        failed++;
+        failedChannels.push(`${channel.name} (${err.message.substring(0, 60)})`);
+      }
     }
+
+  } finally {
+    // Cerrar el browser siempre, incluso si hubo errores
+    await browser.close().catch(err => console.error(`[browser] Error al cerrar: ${err.message}`));
+    console.log('[browser] Chromium cerrado');
   }
 
   // Actualizar timestamp en la raíz del JSON
@@ -406,7 +532,7 @@ async function gitPush(updated = 0, total = 0) {
 
 /**
  * Punto de entrada del servicio.
- * Al arrancar: verifica edad de los streams y extrae si superan MAX_TOKEN_AGE_HOURS.
+ * Al arrancar: extrae inmediatamente (tokens del ciclo anterior ya vencieron).
  * Luego programa el ciclo periódico con UPDATE_INTERVAL_HOURS.
  */
 async function main() {
@@ -417,6 +543,7 @@ async function main() {
   console.log(`[updater] Edad máx. tokens: ${MAX_TOKEN_AGE_HOURS}h`);
   console.log(`[updater] Repo:             ${REPO_PATH}`);
   console.log(`[updater] streams.json:     ${STREAMS_JSON_PATH}`);
+  console.log(`[updater] Chromium:         ${CHROMIUM_PATH}`);
 
   // ── Autenticación SSH con GitHub ────────────────────────────────
   await checkGitHubAuth();
@@ -425,11 +552,8 @@ async function main() {
   // Cada arranque del contenedor implica que los tokens deben renovarse.
   // El ciclo periódico (setInterval) se encarga de las renovaciones siguientes.
   console.log('\n[updater] Arranque detectado — extracción inmediata');
-  const runImmediately = true;
 
-  if (runImmediately) {
-    await extractAll().catch(err => console.error('[updater] Error en extracción inicial:', err.message));
-  }
+  await extractAll().catch(err => console.error('[updater] Error en extracción inicial:', err.message));
 
   // ── Ciclo periódico ──────────────────────────────────────────────────────
   const intervalMs = UPDATE_INTERVAL_HOURS * 60 * 60 * 1000;
