@@ -146,46 +146,40 @@ async function extractWithBrowser(startUrl, browser) {
     let capturedUrl     = null;
     let capturedReferer = startUrl;
     let resolveCapture;
-    let requestCount    = 0; // Contador de requests recibidas (diagnóstico)
 
-    // Promesa que se resuelve en cuanto interceptamos el stream
+    // Promesa que se resuelve en cuanto capturamos el stream
     const streamFoundPromise = new Promise(resolve => { resolveCapture = resolve; });
 
-    // Activar intercepción de requests — captura TODAS las requests de la página e iframes
-    await page.setRequestInterception(true);
-    page.on('request', interceptedReq => {
-      const url = interceptedReq.url();
-      requestCount++;
-
-      // Log de las primeras 5 requests para confirmar que el browser está activo
-      if (requestCount <= 5) console.log(`    [browser] req#${requestCount}: ${url.substring(0, 90)}`);
+    // Escuchar responses (no-bloqueante) en lugar de interceptar requests.
+    // setRequestInterception suspende CADA request hasta que Puppeteer llame continue(),
+    // lo que altera el timing de carga del JS del player: Clappr/SwarmCloud tienen
+    // lógica de inicialización sensible al orden de carga y fallan silenciosamente
+    // si sus módulos no llegan en la secuencia correcta — el browser recibe los requests
+    // pero el player nunca llega a hacer la request al CDN por ese desorden de timing.
+    // page.on('response') observa sin interferir — el player arranca normalmente.
+    page.on('response', response => {
+      const url = response.url();
 
       if (!capturedUrl && url.match(/\.(?:m3u8|mpd)/i)) {
         // Filtrar para capturar solo streams reales:
         // Los streams auténticos siempre tienen ?token= en la URL (auth del CDN).
         // Los .m3u8 sin token son manifests internos del player (test-stream, splash, etc.)
-        // que se cargan ANTES del stream real — dejarlos pasar evita capturar basura.
         if (url.includes('token=')) {
           // Stream real con token de CDN — este es el que necesitamos
           capturedUrl     = url;
-          capturedReferer = interceptedReq.headers()['referer'] || startUrl;
-          interceptedReq.abort(); // No necesitamos descargarlo, solo la URL
+          capturedReferer = response.request().headers()['referer'] || startUrl;
           resolveCapture({ url: capturedUrl, referer: capturedReferer });
         } else {
-          // .m3u8 sin token — manifest interno del player, dejarlo pasar
+          // .m3u8 sin token — manifest interno del player, ignorar
           console.log(`    [browser] .m3u8 sin token ignorado: ${url.substring(0, 90)}`);
-          interceptedReq.continue().catch(() => {});
         }
-      } else {
-        // Dejar pasar todas las demás requests (JS, CSS, imágenes, etc.)
-        interceptedReq.continue().catch(() => {});
       }
     });
 
     // Timeout total de 30s — aumentado para dar más tiempo al player en carga lenta
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => {
-        reject(new Error(`Timeout (30s): no se interceptó stream (${requestCount} requests recibidas)`));
+        reject(new Error(`Timeout (30s): no se capturó stream`));
       }, 30_000)
     );
 
@@ -438,6 +432,7 @@ async function extractAll() {
       '--mute-audio',                                   // No reproducir audio durante la extracción
       '--no-zygote',                                    // Evita procesos zombie en entornos con pid namespace restringido
       '--disable-blink-features=AutomationControlled',  // Oculta el flag CDP que delata al browser automatizado
+      '--autoplay-policy=no-user-gesture-required',     // Permite que el player arranque sin gesto del usuario
     ]
   });
   console.log('[browser] ✅ Chromium iniciado');
