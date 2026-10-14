@@ -164,14 +164,16 @@ async function extractWithBrowser(startUrl, browser) {
         // Filtrar para capturar solo streams reales:
         // Los streams auténticos siempre tienen ?token= en la URL (auth del CDN).
         // Los .m3u8 sin token son manifests internos del player (test-stream, splash, etc.)
-        if (url.includes('token=')) {
-          // Stream real con token de CDN — este es el que necesitamos
+        // Token CDN real: formato hexhash-id-ts-ts (con guiones y timestamps).
+        // Tokens cortos sin guiones son manifests internos/splash del player — ignorarlos.
+        if (/[?&]token=[0-9a-f]+-[0-9a-f]+-\d+-\d+/i.test(url)) {
+          // Stream real con token CDN completo — este es el que necesitamos
           capturedUrl     = url;
           capturedReferer = response.request().headers()['referer'] || startUrl;
           resolveCapture({ url: capturedUrl, referer: capturedReferer });
         } else {
-          // .m3u8 sin token — manifest interno del player, ignorar
-          console.log(`    [browser] .m3u8 sin token ignorado: ${url.substring(0, 90)}`);
+          // .m3u8 con token incompleto o sin token — manifest interno del player, ignorar
+          console.log(`    [browser] .m3u8 sin token CDN ignorado: ${url.substring(0, 90)}`);
         }
       }
     });
