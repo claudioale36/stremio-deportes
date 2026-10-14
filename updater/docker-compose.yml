@@ -2,8 +2,11 @@
 # docker-compose.yml — stremio-deportes-updater
 #
 # Volúmenes montados:
-#   /app/repo  → el repo clonado en el host (lectura/escritura para git push)
-#   /root/.ssh → claves SSH del host (solo lectura — para autenticar el push)
+#   /app/repo → el repo clonado en el host (lectura/escritura para git push)
+#
+# Autenticación git: HTTPS + PAT (Personal Access Token)
+#   El token se lee desde ../.env (GITHUB_TOKEN) y se inyecta al contenedor.
+#   Evita los problemas de bad owner que tiene SSH con volúmenes Docker.
 #
 # Arranque:
 #   docker compose up -d --build
@@ -27,11 +30,10 @@ services:
     volumes:
       # Repositorio del host — el updater escribe streams.json y hace push.
       # Ruta relativa al docker-compose.yml (updater/) → apunta a la raíz del repo.
-      # Usar relativa evita rutas hardcodeadas que fallan si el proyecto cambia de ubicación.
       - ../:/app/repo
-      # Claves SSH del usuario github-runner — ruta explícita porque con
-      # "sudo docker compose" el ~ expande a /root y no al usuario correcto.
-      - /home/github-runner/.ssh:/root/.ssh:ro
+    env_file:
+      # Lee GITHUB_TOKEN desde el .env en la raíz del repo (un nivel arriba del updater/)
+      - ../.env
     environment:
       REPO_PATH:              /app/repo
       STREAMS_JSON_PATH:      /app/repo/streams.json
@@ -42,6 +44,3 @@ services:
       # sudo FORCE_UPDATE=1 docker compose up -d
       # Si no se define en el host, queda en "0" (comportamiento normal).
       FORCE_UPDATE:           "${FORCE_UPDATE:-0}"
-      # Fuerza a git y ssh a usar la clave explicitamente, ignorando /root/.ssh/config
-      # (el config tiene bad owner porque el UID del host != root del contenedor)
-      GIT_SSH_COMMAND:        "ssh -F /dev/null -i /root/.ssh/id_ed25519_claudio -o StrictHostKeyChecking=accept-new"
