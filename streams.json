@@ -53,7 +53,7 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://4.ftlly.com:443/disney29/mono.m3u8?token=9e90910ec0aff4cfd6da849638509806d468baef-e0-1791958569-1791940569",
+          "url": "https://b2zmawnpyww.fubo18.com/espn/mono.m3u8?token=e16b668584131434e579de3179f0820d58ea605d-b0-1791969484-1791951484",
           "updatedAt": "2026-10-14T01:31:09.273Z",
           "referer": "https://tvf90.com/5.php?stream=disney29"
         },
@@ -205,7 +205,7 @@
           "updatedAt": ""
         },
         {
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/6/tracks-v1a1/mono.m3u8?token=cf2856f6e808e8f21f96df47c61457fdbfa47f47-8975daf826bae12358afcf9de2ac2699-1791703988-1791682388",
+          "url": "https://6.ftlly.com/tycsports/mono.m3u8?token=63305bf7a0df61c24aad18e0899a30dea34aa28c-ed-1791969593-1791951593",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -305,22 +305,6 @@
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
@@ -360,22 +344,6 @@
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
         }
       ]
     },
@@ -402,14 +370,6 @@
         {
           "url": "https://mileixd.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=02d86679cdc760a3d9622845cf176628a92b357c-dc-1791737494-1791683494",
           "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
           "headers": {
             "Referer": "",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
