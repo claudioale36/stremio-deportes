@@ -488,22 +488,30 @@ async function extractAll() {
 
 /**
  * Hace git add + commit + push del streams.json actualizado.
- * Usa las claves SSH del host montadas en /root/.ssh (volumen Docker).
- * La rama se detecta dinámicamente desde el repo montado — no está hardcodeada.
+ * Autenticación: HTTPS + Personal Access Token (GITHUB_TOKEN env var).
+ * HTTPS + PAT es el estándar para push automático en Docker: evita los problemas
+ * de bad owner que tiene SSH cuando los archivos montados pertenecen a otro UID.
+ * La rama se detecta dinámicamente — no está hardcodeada.
  * @param {number} updated  - Canales actualizados con éxito (para el mensaje de commit).
  * @param {number} total    - Total de canales procesados.
  */
 async function gitPush(updated = 0, total = 0) {
+  // Verificar token antes de cualquier operación git
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    console.error('[git] ❌ GITHUB_TOKEN no definido — push cancelado');
+    return;
+  }
+
   const git = simpleGit(REPO_PATH);
 
   // Configurar identidad del committer (requerida en el contenedor)
   await git.addConfig('user.name',  'stremio-updater');
   await git.addConfig('user.email', 'updater@local');
 
-  // Mostrar el remote al que se hará push — útil para verificar autenticación
-  const remotes = await git.getRemotes(true);
-  const origin  = remotes.find(r => r.name === 'origin');
-  if (origin) console.log(`[git] Remote: ${origin.refs.push || origin.refs.fetch}`);
+  // Construir remote URL con token embebido — nunca se loguea completo
+  const remoteUrl = `https://${token}@github.com/claudioale36/stremio-deportes.git`;
+  console.log('[git] Remote: https://***@github.com/claudioale36/stremio-deportes.git');
 
   // Detectar la rama actual del repo en vez de hardcodear 'main'
   const currentBranch = (await git.revparse(['--abbrev-ref', 'HEAD'])).trim();
@@ -524,7 +532,8 @@ async function gitPush(updated = 0, total = 0) {
   const commitResult = await git.commit(commitMsg);
   console.log(`[git] Commit: ${commitResult.commit} — "${commitMsg}"`);
 
-  await git.push('origin', currentBranch);
+  // Push usando la URL con token — sin depender de claves SSH
+  await git.push(remoteUrl, currentBranch);
   console.log(`[git] ✅ Push exitoso → origin/${currentBranch}`);
 }
 
@@ -545,8 +554,12 @@ async function main() {
   console.log(`[updater] streams.json:     ${STREAMS_JSON_PATH}`);
   console.log(`[updater] Chromium:         ${CHROMIUM_PATH}`);
 
-  // ── Autenticación SSH con GitHub ────────────────────────────────
-  await checkGitHubAuth();
+  // ── Verificar token de GitHub ──────────────────────────────────
+  if (!process.env.GITHUB_TOKEN) {
+    console.error('[git] ⚠️  GITHUB_TOKEN no definido — el push automático no funcionará');
+  } else {
+    console.log('[git] ✅ GITHUB_TOKEN presente — push HTTPS habilitado');
+  }
 
   // ── Siempre extraer al arrancar ────────────────────────────────────────────
   // Cada arranque del contenedor implica que los tokens deben renovarse.
