@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T01:24:47.143Z",
+  "lastUpdated": "2026-10-14T01:31:31.359Z",
   "channels": [
     {
       "id": "fox-sports",
@@ -16,8 +16,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://8.ftlly.com:443/foxsports/mono.m3u8?token=459152acd1314915224ad075d05072c5ee95e467-e8-1791958153-1791940153",
-          "updatedAt": "2026-10-14T01:24:13.163Z",
+          "url": "https://10.ftlly.com:443/foxsports/mono.m3u8?token=39285be9aad1f7db63622904a94336abe570374d-17-1791958557-1791940557",
+          "updatedAt": "2026-10-14T01:30:57.171Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports"
         },
         {
@@ -53,8 +53,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://5.ftlly.com:443/disney29/mono.m3u8?token=fa858f55fbace98752ad9949164a1d5a17c633d5-76-1791958164-1791940164",
-          "updatedAt": "2026-10-14T01:24:25.112Z",
+          "url": "https://4.ftlly.com:443/disney29/mono.m3u8?token=9e90910ec0aff4cfd6da849638509806d468baef-e0-1791958569-1791940569",
+          "updatedAt": "2026-10-14T01:31:09.273Z",
           "referer": "https://tvf90.com/5.php?stream=disney29"
         },
         {
@@ -80,8 +80,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://11.ftlly.com:443/espn/mono.m3u8?token=0b46b24424cdcc88b8b0bcbe8c2f49cbd5fa36d5-b5-1791958165-1791940165",
-          "updatedAt": "2026-10-14T01:24:25.651Z",
+          "url": "https://10.ftlly.com:443/espn/mono.m3u8?token=88cd2ca2e43d44ed9bb9aa6ffe27d9a01c88503c-ff-1791958569-1791940569",
+          "updatedAt": "2026-10-14T01:31:09.809Z",
           "referer": "https://tvf90.com/5.php?stream=espn"
         },
         {
@@ -259,8 +259,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://3.ftlly.com:443/dsports_eventos/mono.m3u8?token=3651a6bbb0e14bcd2615db6f51e4278ac40877bd-ee-1791958182-1791940182",
-          "updatedAt": "2026-10-14T01:24:42.448Z",
+          "url": "https://10.ftlly.com:443/dsports_eventos/mono.m3u8?token=1ceece9cc5a6b9742a5cc9cdcf35076497a416d2-45-1791958586-1791940586",
+          "updatedAt": "2026-10-14T01:31:26.680Z",
           "referer": "https://tvf90.com/5.php?stream=dsports_eventos"
         },
         {
