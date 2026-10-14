@@ -36,9 +36,6 @@ const UPDATE_INTERVAL_HOURS = parseFloat(process.env.UPDATE_INTERVAL_HOURS || '3
 /** Si los streams tienen más edad que esto al arrancar, extrae inmediatamente */
 const MAX_TOKEN_AGE_HOURS = parseFloat(process.env.MAX_TOKEN_AGE_HOURS || '3');
 
-/** Si es '1', salta el chequeo de edad y extrae inmediatamente al arrancar */
-const FORCE_UPDATE = process.env.FORCE_UPDATE === '1';
-
 // ─── Caché de la API de agenda ────────────────────────────────────────────────
 
 const DIARIES_API_URL   = 'https://api.wqxag.com/diaries.json';
@@ -420,42 +417,15 @@ async function main() {
   console.log(`[updater] Edad máx. tokens: ${MAX_TOKEN_AGE_HOURS}h`);
   console.log(`[updater] Repo:             ${REPO_PATH}`);
   console.log(`[updater] streams.json:     ${STREAMS_JSON_PATH}`);
-  if (FORCE_UPDATE) console.log(`[updater] FORCE_UPDATE:      activo`);
 
   // ── Autenticación SSH con GitHub ────────────────────────────────
   await checkGitHubAuth();
 
-  // ── Verificar edad de los streams al arrancar ────────────────────────────
-  let runImmediately = false;
-
-  if (FORCE_UPDATE) {
-    console.log('\n[updater] FORCE_UPDATE=1 — se fuerza extracción inmediata');
-    runImmediately = true;
-  } else {
-    try {
-      const data        = JSON.parse(fs.readFileSync(STREAMS_JSON_PATH, 'utf8'));
-      const lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : null;
-
-      if (lastUpdated) {
-        const ageHours = (Date.now() - lastUpdated.getTime()) / (1000 * 60 * 60);
-        console.log(`\n[updater] Edad de los streams: ${ageHours.toFixed(1)}h`);
-
-        if (ageHours <= MAX_TOKEN_AGE_HOURS) {
-          const nextIn = UPDATE_INTERVAL_HOURS - ageHours;
-          console.log(`[updater] Tokens vigentes — próxima extracción en ${nextIn.toFixed(1)}h`);
-        } else {
-          console.log(`[updater] Tokens vencidos (${ageHours.toFixed(1)}h > ${MAX_TOKEN_AGE_HOURS}h) — extrayendo ya`);
-          runImmediately = true;
-        }
-      } else {
-        console.log('[updater] Sin lastUpdated — extrayendo inmediatamente');
-        runImmediately = true;
-      }
-    } catch (err) {
-      console.error('[updater] Error leyendo streams.json:', err.message);
-      runImmediately = true;
-    }
-  }
+  // ── Siempre extraer al arrancar ────────────────────────────────────────────
+  // Cada arranque del contenedor implica que los tokens deben renovarse.
+  // El ciclo periódico (setInterval) se encarga de las renovaciones siguientes.
+  console.log('\n[updater] Arranque detectado — extracción inmediata');
+  const runImmediately = true;
 
   if (runImmediately) {
     await extractAll().catch(err => console.error('[updater] Error en extracción inicial:', err.message));
