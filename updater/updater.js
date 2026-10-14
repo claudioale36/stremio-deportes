@@ -6,7 +6,8 @@
  *              el resultado en add-on/streams.json y hace push al repositorio GitHub vía SSH.
  * @usage       node updater.js (dentro del contenedor Docker)
  * @data        updater/extractor-config.json — config de fuentes por canal.
- *              add-on/streams.json — escribe URLs frescas en el slot "HD (auto)" de cada canal.
+ *              streams.json (raíz del repo) — escribe URLs frescas en el slot "HD (auto)" de cada canal.
+ *              FORCE_UPDATE=1 — env var para forzar extracción inmediata al arrancar (bypass del chequeo de edad).
  */
 
 'use strict';
@@ -34,6 +35,9 @@ const UPDATE_INTERVAL_HOURS = parseFloat(process.env.UPDATE_INTERVAL_HOURS || '3
 
 /** Si los streams tienen más edad que esto al arrancar, extrae inmediatamente */
 const MAX_TOKEN_AGE_HOURS = parseFloat(process.env.MAX_TOKEN_AGE_HOURS || '3');
+
+/** Si es '1', salta el chequeo de edad y extrae inmediatamente al arrancar */
+const FORCE_UPDATE = process.env.FORCE_UPDATE === '1';
 
 // ─── Caché de la API de agenda ────────────────────────────────────────────────
 
@@ -226,6 +230,34 @@ async function extractStreamUrl(extractor, channelId) {
   return null;
 }
 
+// ─── Autenticación Git ───────────────────────────────────────────────────
+
+/**
+ * Verifica la autenticación SSH con GitHub al arranque del servicio.
+ * Ejecuta `ssh -T git@github.com` para confirmar que la clave SSH está disponible.
+ * GitHub responde con código de salida 1 pero mensaje "Hi <user>!" — se considera éxito.
+ * @returns {Promise<boolean>} true si la autenticación fue exitosa
+ */
+async function checkGitHubAuth() {
+  const { execFile } = require('child_process');
+  return new Promise(resolve => {
+    execFile(
+      'ssh', ['-T', '-o', 'StrictHostKeyChecking=accept-new', 'git@github.com'],
+      { timeout: 10000 },
+      (_err, stdout, stderr) => {
+        const output = (stdout + stderr).trim();
+        if (output.includes('successfully authenticated') || output.includes('Hi ')) {
+          console.log(`[git] ✅ Auth SSH GitHub OK — ${output}`);
+          resolve(true);
+        } else {
+          console.error(`[git] ❌ Auth SSH GitHub FALLÓ — ${output || '(sin respuesta)'}`);
+          resolve(false);
+        }
+      }
+    );
+  });
+}
+
 // ─── Lógica de actualización ──────────────────────────────────────────────────
 
 /**
@@ -238,21 +270,45 @@ async function extractAll() {
   console.log(`[updater] Iniciando extracción — ${new Date().toISOString()}`);
   console.log('[updater] ──────────────────────────────────────────────────────');
 
-  const config      = JSON.parse(fs.readFileSync(EXTRACTOR_CONFIG_PATH, 'utf8')).channels || [];
-  const streamsData = JSON.parse(fs.readFileSync(STREAMS_JSON_PATH, 'utf8'));
+  // Cargar config del extractor
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync(EXTRACTOR_CONFIG_PATH, 'utf8')).channels || [];
+  } catch (err) {
+    console.error(`[updater] ❌ No se pudo leer extractor-config.json: ${err.message}`);
+    return;
+  }
 
-  let updated = 0;
-  let failed  = 0;
+  // Cargar streams.json — si no existe, el volumen Docker no está montado correctamente
+  let streamsData;
+  try {
+    streamsData = JSON.parse(fs.readFileSync(STREAMS_JSON_PATH, 'utf8'));
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.error(`[updater] ❌ streams.json no encontrado en: ${STREAMS_JSON_PATH}`);
+      console.error('[updater]    Causa probable: el volumen Docker no apunta al repo correcto.');
+      console.error('[updater]    Verificar en docker-compose.yml: volumes: ../:/app/repo');
+    } else {
+      console.error(`[updater] ❌ Error leyendo streams.json: ${err.message}`);
+    }
+    return;
+  }
 
-  for (const channelConfig of config) {
+  const total          = config.length;
+  let   updated        = 0;
+  let   failed         = 0;
+  const failedChannels = [];
+
+  for (let i = 0; i < config.length; i++) {
+    const channelConfig = config[i];
     const channel = streamsData.channels.find(c => c.id === channelConfig.id);
 
     if (!channel) {
-      console.warn(`\n[updater] Canal "${channelConfig.id}" no encontrado en streams.json — omitiendo`);
+      console.warn(`\n[updater] [${i + 1}/${total}] Canal "${channelConfig.id}" no en streams.json — omitiendo`);
       continue;
     }
 
-    console.log(`\n[updater] → ${channel.name} (${channelConfig.id})`);
+    console.log(`\n[updater] [${i + 1}/${total}] → ${channel.name} (${channelConfig.id})`);
 
     try {
       const result = await extractStreamUrl(channelConfig.extractor, channelConfig.id);
@@ -262,25 +318,30 @@ async function extractAll() {
         const autoSlot = (channel.streams || []).find(s => s.label === 'HD (auto)');
 
         if (!autoSlot) {
-          console.warn(`  ⚠️ No se encontró slot "HD (auto)" para ${channel.name} — omitiendo`);
+          console.warn(`  ⚠️  No se encontró slot "HD (auto)" para ${channel.name} — omitiendo`);
           continue;
         }
+
+        const oldUrl = autoSlot.url || '(vacío)';
 
         autoSlot.url       = result.url;
         autoSlot.referer   = result.referer; // guardado en el JSON para debug
         autoSlot.updatedAt = new Date().toISOString();
 
-        console.log(`  ✅ ${result.url.substring(0, 75)}...`);
+        console.log(`  ANTERIOR: ${oldUrl.substring(0, 80)}`);
+        console.log(`  NUEVO:    ${result.url.substring(0, 80)}`);
         updated++;
 
       } else {
-        console.warn(`  ⚠️ No se pudo extraer URL — slot sin cambios`);
+        console.warn(`  ⚠️  No se pudo extraer URL — slot sin cambios`);
         failed++;
+        failedChannels.push(channel.name);
       }
 
     } catch (err) {
       console.error(`  ❌ Error: ${err.message}`);
       failed++;
+      failedChannels.push(`${channel.name} (${err.message.substring(0, 60)})`);
     }
   }
 
@@ -288,31 +349,45 @@ async function extractAll() {
   streamsData.lastUpdated = new Date().toISOString();
   fs.writeFileSync(STREAMS_JSON_PATH, JSON.stringify(streamsData, null, 2) + '\n', 'utf8');
 
-  console.log(`\n[updater] Resultado: ${updated} OK / ${failed} fallidos / ${config.length} total`);
+  console.log('\n[updater] ──────────────────────────────────────────────────────');
+  console.log(`[updater] Resultado: ${updated} OK / ${failed} fallidos / ${total} total`);
+
+  if (failedChannels.length) {
+    console.log('[updater] Sin enlace:');
+    failedChannels.forEach(name => console.log(`[updater]   • ${name}`));
+  }
+
   console.log('[updater] streams.json escrito en disco');
 
   // Push al repositorio GitHub
-  await gitPush();
+  await gitPush(updated, total);
 }
 
 /**
  * Hace git add + commit + push del streams.json actualizado.
  * Usa las claves SSH del host montadas en /root/.ssh (volumen Docker).
  * La rama se detecta dinámicamente desde el repo montado — no está hardcodeada.
+ * @param {number} updated  - Canales actualizados con éxito (para el mensaje de commit).
+ * @param {number} total    - Total de canales procesados.
  */
-async function gitPush() {
+async function gitPush(updated = 0, total = 0) {
   const git = simpleGit(REPO_PATH);
 
   // Configurar identidad del committer (requerida en el contenedor)
   await git.addConfig('user.name',  'stremio-updater');
   await git.addConfig('user.email', 'updater@local');
 
+  // Mostrar el remote al que se hará push — útil para verificar autenticación
+  const remotes = await git.getRemotes(true);
+  const origin  = remotes.find(r => r.name === 'origin');
+  if (origin) console.log(`[git] Remote: ${origin.refs.push || origin.refs.fetch}`);
+
   // Detectar la rama actual del repo en vez de hardcodear 'main'
   const currentBranch = (await git.revparse(['--abbrev-ref', 'HEAD'])).trim();
   console.log(`[git] Rama activa: ${currentBranch}`);
 
   // Stagear el streams.json (ruta relativa a REPO_PATH)
-  const streamsRelPath = require('path').relative(REPO_PATH, STREAMS_JSON_PATH);
+  const streamsRelPath = path.relative(REPO_PATH, STREAMS_JSON_PATH);
   await git.add(streamsRelPath);
 
   const status = await git.status();
@@ -321,10 +396,12 @@ async function gitPush() {
     return;
   }
 
-  const timestamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
-  await git.commit(`chore: actualizar streams.json [${timestamp}]`);
-  await git.push('origin', currentBranch);
+  const timestamp    = new Date().toISOString().slice(0, 16).replace('T', ' ');
+  const commitMsg    = `chore: actualizar streams.json — ${updated}/${total} canales [${timestamp}]`;
+  const commitResult = await git.commit(commitMsg);
+  console.log(`[git] Commit: ${commitResult.commit} — "${commitMsg}"`);
 
+  await git.push('origin', currentBranch);
   console.log(`[git] ✅ Push exitoso → origin/${currentBranch}`);
 }
 
@@ -343,30 +420,41 @@ async function main() {
   console.log(`[updater] Edad máx. tokens: ${MAX_TOKEN_AGE_HOURS}h`);
   console.log(`[updater] Repo:             ${REPO_PATH}`);
   console.log(`[updater] streams.json:     ${STREAMS_JSON_PATH}`);
+  if (FORCE_UPDATE) console.log(`[updater] FORCE_UPDATE:      activo`);
+
+  // ── Autenticación SSH con GitHub ────────────────────────────────
+  await checkGitHubAuth();
 
   // ── Verificar edad de los streams al arrancar ────────────────────────────
-  let runImmediately = true;
+  let runImmediately = false;
 
-  try {
-    const data        = JSON.parse(fs.readFileSync(STREAMS_JSON_PATH, 'utf8'));
-    const lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : null;
+  if (FORCE_UPDATE) {
+    console.log('\n[updater] FORCE_UPDATE=1 — se fuerza extracción inmediata');
+    runImmediately = true;
+  } else {
+    try {
+      const data        = JSON.parse(fs.readFileSync(STREAMS_JSON_PATH, 'utf8'));
+      const lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : null;
 
-    if (lastUpdated) {
-      const ageHours = (Date.now() - lastUpdated.getTime()) / (1000 * 60 * 60);
-      console.log(`\n[updater] Edad de los streams: ${ageHours.toFixed(1)}h`);
+      if (lastUpdated) {
+        const ageHours = (Date.now() - lastUpdated.getTime()) / (1000 * 60 * 60);
+        console.log(`\n[updater] Edad de los streams: ${ageHours.toFixed(1)}h`);
 
-      if (ageHours <= MAX_TOKEN_AGE_HOURS) {
-        const nextIn = UPDATE_INTERVAL_HOURS - ageHours;
-        console.log(`[updater] Tokens vigentes — próxima extracción en ${nextIn.toFixed(1)}h`);
-        runImmediately = false;
+        if (ageHours <= MAX_TOKEN_AGE_HOURS) {
+          const nextIn = UPDATE_INTERVAL_HOURS - ageHours;
+          console.log(`[updater] Tokens vigentes — próxima extracción en ${nextIn.toFixed(1)}h`);
+        } else {
+          console.log(`[updater] Tokens vencidos (${ageHours.toFixed(1)}h > ${MAX_TOKEN_AGE_HOURS}h) — extrayendo ya`);
+          runImmediately = true;
+        }
       } else {
-        console.log(`[updater] Tokens vencidos (${ageHours.toFixed(1)}h > ${MAX_TOKEN_AGE_HOURS}h) — extrayendo ya`);
+        console.log('[updater] Sin lastUpdated — extrayendo inmediatamente');
+        runImmediately = true;
       }
-    } else {
-      console.log('[updater] Sin lastUpdated — extrayendo inmediatamente');
+    } catch (err) {
+      console.error('[updater] Error leyendo streams.json:', err.message);
+      runImmediately = true;
     }
-  } catch (err) {
-    console.error('[updater] Error leyendo streams.json:', err.message);
   }
 
   if (runImmediately) {
