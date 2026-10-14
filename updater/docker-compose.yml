@@ -29,8 +29,9 @@ services:
       # Ruta relativa al docker-compose.yml (updater/) → apunta a la raíz del repo.
       # Usar relativa evita rutas hardcodeadas que fallan si el proyecto cambia de ubicación.
       - ../:/app/repo
-      # Claves SSH del host — solo lectura, para autenticar el git push
-      - ~/.ssh:/root/.ssh:ro
+      # Claves SSH del usuario github-runner — ruta explícita porque con
+      # "sudo docker compose" el ~ expande a /root y no al usuario correcto.
+      - /home/github-runner/.ssh:/root/.ssh:ro
     environment:
       REPO_PATH:              /app/repo
       STREAMS_JSON_PATH:      /app/repo/streams.json
