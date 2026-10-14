@@ -146,6 +146,7 @@ async function extractWithBrowser(startUrl, browser) {
     let capturedUrl     = null;
     let capturedReferer = startUrl;
     let resolveCapture;
+    let requestCount    = 0; // Contador de requests recibidas (diagnóstico)
 
     // Promesa que se resuelve en cuanto interceptamos el stream
     const streamFoundPromise = new Promise(resolve => { resolveCapture = resolve; });
@@ -154,28 +155,44 @@ async function extractWithBrowser(startUrl, browser) {
     await page.setRequestInterception(true);
     page.on('request', interceptedReq => {
       const url = interceptedReq.url();
+      requestCount++;
+
+      // Log de las primeras 5 requests para confirmar que el browser está activo
+      if (requestCount <= 5) console.log(`    [browser] req#${requestCount}: ${url.substring(0, 90)}`);
 
       if (!capturedUrl && url.match(/\.(?:m3u8|mpd)/i)) {
-        // Primera request al CDN — este es el token real generado por el JS del player
-        capturedUrl     = url;
-        capturedReferer = interceptedReq.headers()['referer'] || startUrl;
-
-        interceptedReq.abort(); // No necesitamos que el stream cargue, solo la URL
-        resolveCapture({ url: capturedUrl, referer: capturedReferer });
+        // Filtrar para capturar solo streams reales:
+        // Los streams auténticos siempre tienen ?token= en la URL (auth del CDN).
+        // Los .m3u8 sin token son manifests internos del player (test-stream, splash, etc.)
+        // que se cargan ANTES del stream real — dejarlos pasar evita capturar basura.
+        if (url.includes('token=')) {
+          // Stream real con token de CDN — este es el que necesitamos
+          capturedUrl     = url;
+          capturedReferer = interceptedReq.headers()['referer'] || startUrl;
+          interceptedReq.abort(); // No necesitamos descargarlo, solo la URL
+          resolveCapture({ url: capturedUrl, referer: capturedReferer });
+        } else {
+          // .m3u8 sin token — manifest interno del player, dejarlo pasar
+          console.log(`    [browser] .m3u8 sin token ignorado: ${url.substring(0, 90)}`);
+          interceptedReq.continue().catch(() => {});
+        }
       } else {
-        // Dejar pasar todas las demás requests (JS, CSS, etc.)
+        // Dejar pasar todas las demás requests (JS, CSS, imágenes, etc.)
         interceptedReq.continue().catch(() => {});
       }
     });
 
-    // Timeout total de 25s — si el player no carga el stream en ese tiempo, falla
+    // Timeout total de 30s — aumentado para dar más tiempo al player en carga lenta
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Timeout (25s): no se interceptó stream')), 25_000)
+      setTimeout(() => {
+        reject(new Error(`Timeout (30s): no se interceptó stream (${requestCount} requests recibidas)`));
+      }, 30_000)
     );
 
-    // Iniciar navegación — ignorar ERR_ABORTED (causado cuando abortamos el stream)
-    page.goto(startUrl, { waitUntil: 'domcontentloaded', timeout: 20_000 })
-      .catch(() => {});
+    // Iniciar navegación — loguear errores (antes se silenciaban con .catch(() => {}),
+    // ocultando si la navegación fallaba antes de que el player pudiera arrancar)
+    page.goto(startUrl, { waitUntil: 'domcontentloaded', timeout: 25_000 })
+      .catch(err => console.warn(`    [browser] goto error (ignorado): ${err.message.split('\n')[0]}`));
 
     // Esperar a que se capture el stream o se agote el timeout
     return await Promise.race([streamFoundPromise, timeoutPromise]);
