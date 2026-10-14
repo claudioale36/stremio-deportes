@@ -22,11 +22,11 @@ services:
       network: host
     container_name: stremio-updater
     restart: unless-stopped
-    # DNS explícito para el build y runtime — evita que el daemon use el resolver
-    # interno de Docker que falla en algunas redes/hosts (síntoma: apt-get exit 100)
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
+    # Usa la red del host directamente — el contenedor solo hace conexiones salientes
+    # (extracción + push a GitHub). Sin host networking, GitHub HTTPS queda bloqueado
+    # por el bridge de Docker en este entorno. No hay puertos expuestos, sin riesgo.
+    # Nota: con host networking, la sección dns: queda ignorada.
+    network_mode: host
     volumes:
       # Repositorio del host — el updater escribe streams.json y hace push.
       # Ruta relativa al docker-compose.yml (updater/) → apunta a la raíz del repo.
