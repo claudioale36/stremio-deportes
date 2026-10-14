@@ -121,10 +121,24 @@ async function extractWithBrowser(startUrl, browser) {
   const page = await browser.newPage();
 
   try {
+    // Inyectar antes de que cargue cualquier script — los players comprueban estas propiedades
+    // en cuanto arrancan para detectar browsers automatizados.
+    await page.evaluateOnNewDocument(() => {
+      // navigator.webdriver es el indicador más usado para detectar Puppeteer/CDP
+      Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+      // Eliminar trazas del Chrome DevTools Protocol que dejan versiones antiguas de Chromium
+      delete window.cdc_adoQpoasnfa76pfcZLmcfl_Array;
+      delete window.cdc_adoQpoasnfa76pfcZLmcfl_Promise;
+      delete window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol;
+    });
+
     // User-Agent de Chrome real — algunos servidores bloquean headless explícitamente
     await page.setUserAgent(
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     );
+
+    // Viewport realista — algunos players no inicializan si el área visible es cero o muy pequeña
+    await page.setViewport({ width: 1280, height: 720 });
 
     // Silenciar dialogs (alert/confirm) que podrían bloquear la carga
     page.on('dialog', async dialog => dialog.dismiss().catch(() => {}));
@@ -259,6 +273,13 @@ async function fetchFromDiariesApi(extractor, browser) {
 
   if (!matching.length) {
     console.warn(`    [api-embed] Sin embed para "${extractor.channelName}" en la agenda de hoy`);
+    // Mostrar nombres similares para facilitar diagnóstico cuando el nombre no matchea
+    const targetWords = target.replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(Boolean);
+    const similar = embeds
+      .filter(e => targetWords.some(w => normalizeName(e.name).includes(w)))
+      .map(e => e.name)
+      .slice(0, 5);
+    if (similar.length) console.log(`    [api-embed] Nombres similares disponibles: ${similar.join(' | ')}`);
     return null;
   }
 
@@ -393,12 +414,13 @@ async function extractAll() {
     executablePath: CHROMIUM_PATH,
     headless:        true,
     args: [
-      '--no-sandbox',             // Requerido en Docker (el contenedor corre como root)
-      '--disable-setuid-sandbox', // Ídem
-      '--disable-dev-shm-usage',  // Evita crashes por falta de memoria compartida en Docker
-      '--disable-gpu',            // Sin GPU en servidor headless
-      '--mute-audio',             // No reproducir audio durante la extracción
-      '--no-zygote',              // Evita procesos zombie en entornos con pid namespace restringido
+      '--no-sandbox',                                   // Requerido en Docker (el contenedor corre como root)
+      '--disable-setuid-sandbox',                       // Ídem
+      '--disable-dev-shm-usage',                        // Evita crashes por falta de memoria compartida en Docker
+      '--disable-gpu',                                  // Sin GPU en servidor headless
+      '--mute-audio',                                   // No reproducir audio durante la extracción
+      '--no-zygote',                                    // Evita procesos zombie en entornos con pid namespace restringido
+      '--disable-blink-features=AutomationControlled',  // Oculta el flag CDP que delata al browser automatizado
     ]
   });
   console.log('[browser] ✅ Chromium iniciado');
