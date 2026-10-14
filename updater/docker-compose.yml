@@ -42,3 +42,6 @@ services:
       # sudo FORCE_UPDATE=1 docker compose up -d
       # Si no se define en el host, queda en "0" (comportamiento normal).
       FORCE_UPDATE:           "${FORCE_UPDATE:-0}"
+      # Fuerza a git y ssh a usar la clave explicitamente, ignorando /root/.ssh/config
+      # (el config tiene bad owner porque el UID del host != root del contenedor)
+      GIT_SSH_COMMAND:        "ssh -F /dev/null -i /root/.ssh/id_ed25519_claudio -o StrictHostKeyChecking=accept-new"
