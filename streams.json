@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "",
+  "lastUpdated": "2026-10-14T01:02:58.683Z",
   "channels": [
     {
       "id": "fox-sports",
@@ -7,12 +7,18 @@
       "description": "Fox Sports en vivo",
       "logo": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAdcPH5aK4RA9Q3o78d-nBsYii80x0-F0NO4j6Jj4N-BWITMxKx4kCA3pqJ0Y2cNmx_04IweBr055IB58rjG8yxOukqTQQNhzQMquJ6gXYkj67-3hxatG_CzN63IjJK6RSHv4RDmjlWLrFdLSkDsarXmSxKlMFKkcio5l1qw45oU23-gk1_DuGbQ0LvwI/s960/Fox_Sports2026.png",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "",
-          "updatedAt": ""
+          "url": "https://4.ftlly.com:443/foxsports/mono.m3u8?token=413240ff6bfdc34cd258dae08315e95c6bc6ea58-cc-1791956845-1791938845",
+          "updatedAt": "2026-10-14T01:02:25.278Z",
+          "referer": "https://tvf90.com/5.php?stream=foxsports"
         },
         {
           "url": "https://4.ftlly.com/foxsports/mono.m3u8?token=66fc3a6eee4e1393c2b10459a0127f154e3a01bd-7a-1791798808-1791780808",
@@ -38,12 +44,18 @@
       "description": "Disney + - ESPN Premium — Formula 1",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes", "Fútbol"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "",
-          "updatedAt": ""
+          "url": "https://4.ftlly.com:443/disney29/mono.m3u8?token=49bd927c45eba3802c803fa2e3d590eda0c3d067-38-1791956856-1791938856",
+          "updatedAt": "2026-10-14T01:02:36.629Z",
+          "referer": "https://tvf90.com/5.php?stream=disney29"
         },
         {
           "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
@@ -61,12 +73,16 @@
       "description": "ESPN 1 en vivo",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/9/99/ESPN_logo.png",
       "background": "",
-      "genres": ["Fútbol", "Deportes"],
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "",
-          "updatedAt": ""
+          "url": "https://8.ftlly.com:443/espn/mono.m3u8?token=9dce5fe6ab0541b49899f402a77d11190af64584-8a-1791956857-1791938857",
+          "updatedAt": "2026-10-14T01:02:37.170Z",
+          "referer": "https://tvf90.com/5.php?stream=espn"
         },
         {
           "url": "https://2.ftlly.com/espn/mono.m3u8?token=b1f9ecd0394e54cda1e838f155b95d3d891aae9a-74-1791794490-1791776490",
@@ -84,7 +100,10 @@
       "description": "ESPN 2 en vivo — Moto GP",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/ESPN2_logo.svg",
       "background": "",
-      "genres": ["Fútbol", "Deportes"],
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -123,7 +142,10 @@
       "description": "ESPN 3 en vivo — eventos deportivos",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/5/58/ESPN_3.png",
       "background": "",
-      "genres": ["Fútbol", "Deportes"],
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -146,7 +168,10 @@
       "description": "ESPN Premium en vivo",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/d/db/ESPN_Premium_logo.png",
       "background": "",
-      "genres": ["Fútbol", "Deportes"],
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -169,7 +194,10 @@
       "description": "TyC Sports en vivo",
       "logo": "https://upload.wikimedia.org/wikipedia/commons/8/89/TyC_Sports_Logo.svg",
       "background": "",
-      "genres": ["Fútbol", "Deportes"],
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -200,7 +228,9 @@
       "description": "TNT Sports en vivo",
       "logo": "https://img.agenda18.com/uploads/tnt_sports_572930c5da.webp",
       "background": "",
-      "genres": ["Deportes"],
+      "genres": [
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -223,12 +253,15 @@
       "description": "DirectTV Sports en vivo",
       "logo": "",
       "background": "",
-      "genres": ["Deportes"],
+      "genres": [
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "",
-          "updatedAt": ""
+          "url": "https://6.ftlly.com:443/dsports_eventos/mono.m3u8?token=07e6ca375e48ac63c5a73d3b58a78d760298a182-45-1791956873-1791938873",
+          "updatedAt": "2026-10-14T01:02:53.761Z",
+          "referer": "https://tvf90.com/5.php?stream=dsports_eventos"
         },
         {
           "url": "https://c2f2zq.fubo18.com/dsports/mono.m3u8?token=f85a40ee55f1c9db824a3670e02601fb9c46c6e8-cd-1791708289-1791690289",
@@ -246,7 +279,11 @@
       "description": "DAZN F1 — Formula 1",
       "logo": "",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -261,9 +298,30 @@
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } }
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
       ]
     },
     {
@@ -272,7 +330,11 @@
       "description": "SporTV 3 — Formula 1",
       "logo": "",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
       "streams": [
         {
           "label": "HD (auto)",
@@ -287,9 +349,30 @@
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } }
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
       ]
     },
     {
@@ -298,7 +381,11 @@
       "description": "Camara OnBoard de Colapinto",
       "logo": "",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
       "streams": [
         {
           "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
@@ -316,8 +403,22 @@
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } },
-        { "label": "HD 1080p", "url": "", "headers": { "Referer": "", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" } }
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
       ]
     },
     {
@@ -326,7 +427,11 @@
       "description": "Race Hub",
       "logo": "",
       "background": "",
-      "genres": ["F1", "Motorsport", "Deportes"],
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
       "streams": [
         {
           "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
