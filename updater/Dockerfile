@@ -17,6 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
+# Git 2.35.2+ rechaza repos owned por otro usuario ("dubious ownership").
+# El contenedor corre como root pero /app/repo pertenece al usuario del host.
+# safe.directory en build-time evita el error «fatal: --local can only be used inside a git repository».
+RUN git config --global --add safe.directory /app/repo
+
 WORKDIR /app/updater
 
 # Copiar lockfile antes que el código — si no cambia, Docker reutiliza esta capa
