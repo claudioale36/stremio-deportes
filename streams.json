@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T01:31:31.359Z",
+  "lastUpdated": "2026-10-14T02:05:11.517Z",
   "channels": [
     {
       "id": "fox-sports",
@@ -338,8 +338,12 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "",
-          "updatedAt": ""
+          "url": "https://ym9yzq.fubo18.com/sportv3/mono.m3u8?token=f8597ffb3497d990ad936869a03712295cd0deab-c8-1791960598-1791942598",
+          "updatedAt": "2026-10-14T02:05:09.590Z",
+          "headers": {
+            "Referer": "https://la18hd.su/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
         },
         {
           "url": "https://razen.futlivehd.com/sporttvbr3/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=98549ec0877bc7bda6cac41abaf606691f3e0ce1-44-1791737176-1791683176",
