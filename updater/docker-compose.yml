@@ -37,3 +37,7 @@ services:
       EXTRACTOR_CONFIG_PATH:  /app/updater/extractor-config.json
       UPDATE_INTERVAL_HOURS:  "3"
       MAX_TOKEN_AGE_HOURS:    "3"
+      # Permite forzar extracción inmediata desde la shell del host:
+      # sudo FORCE_UPDATE=1 docker compose up -d
+      # Si no se define en el host, queda en "0" (comportamiento normal).
+      FORCE_UPDATE:           "${FORCE_UPDATE:-0}"
