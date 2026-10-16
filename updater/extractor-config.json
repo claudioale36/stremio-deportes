@@ -97,7 +97,8 @@
       "id": "dazn-f1",
       "extractor": {
         "type": "iframe-chain",
-        "url": "https://deporflix.pe/canales/dazn-f1",
+        "url": "https://embed.ksdjugfssddeports.com/embed2/daznf1.php",
+        "url2": "https://deporflix.pe/canales/dazn-f1",
         "depth": 1
       }
     },
