@@ -13,7 +13,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 services:
-  stremio-updater:
+  stremio-deportes-updater:
     build:
       context: .
       # network: host — BuildKit usa la red del host durante el build,
