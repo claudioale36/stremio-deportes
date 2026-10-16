@@ -6,7 +6,7 @@
         "type": "iframe-chain",
         "url": "https://tvf90.com/online.php?stream=foxsports",
         "url2": "https://futbollibre.mom/canal/fox-sports",
-        "depth": 2
+        "depth": 1
       }
     },
     {
@@ -15,8 +15,8 @@
         "type": "api-embed",
         "channelName": "Disney+",
         "preferHD": false,
-        "url": "https://la18hd.su/vivo/canales.php?stream=espn",
-        "url2": "https://tvf90.com/online.php?stream=espn",
+        "url": "https://tvf90.com/online.php?stream=espn",
+        "url2": "https://la18hd.su/vivo/canales.php?stream=espn",
         "depth": 1
       }
     },
@@ -67,7 +67,7 @@
         "type": "iframe-chain",
         "url": "https://futbollibre.mom/canal/tyc-sports",
         "url2": "https://tvf90.com/1.php?stream=tycsports",
-        "depth": 2
+        "depth": 1
       }
     },
     {
@@ -82,7 +82,7 @@
       }
     },
     {
-      "id": "d-sports-premium",
+      "id": "d-sports",
       "extractor": {
         "type": "api-embed",
         "channelName": "DSports",
@@ -97,7 +97,7 @@
       "extractor": {
         "type": "iframe-chain",
         "url": "https://deporflix.pe/canales/dazn-f1",
-        "depth": 2
+        "depth": 1
       }
     },
     {
@@ -105,7 +105,7 @@
       "extractor": {
         "type": "iframe-chain",
         "url": "https://deporflix.pe/canales/sportv-3",
-        "depth": 2
+        "depth": 1
       }
     }
   ]

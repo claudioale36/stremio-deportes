@@ -5,7 +5,7 @@
       "id": "fox-sports",
       "name": "Fox Sports HD",
       "description": "Fox Sports en vivo",
-      "logo": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAdcPH5aK4RA9Q3o78d-nBsYii80x0-F0NO4j6Jj4N-BWITMxKx4kCA3pqJ0Y2cNmx_04IweBr055IB58rjG8yxOukqTQQNhzQMquJ6gXYkj67-3hxatG_CzN63IjJK6RSHv4RDmjlWLrFdLSkDsarXmSxKlMFKkcio5l1qw45oU23-gk1_DuGbQ0LvwI/s960/Fox_Sports2026.png",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/54/Fox_Sports_Argentina_2026.webp",
       "background": "",
       "genres": [
         "F1",
@@ -46,7 +46,7 @@
       "id": "disney-+",
       "name": "Disney +",
       "description": "Disney + - ESPN Premium — Formula 1",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/7/77/Disney_Plus_logo.svg",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
       "background": "",
       "genres": [
         "F1",
@@ -128,22 +128,6 @@
         },
         {
           "url": "https://4.ftlly.com/espn2/mono.m3u8?token=a4af23b4ffcfb661f4e7e5b42f8f8c5ca580912f-d0-1791707078-1791689078",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://2.ftlly.com/espn2/mono.m3u8?token=414a16af21d6015f3a72cd2c5a2cdd4dca5bb2ac-20-1791707206-1791689206",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://c2f2zq.fubo18.com/espn2/mono.m3u8?token=cbd35dfe0a77613a575d8e1e4b5b1a1b8395d6f7-f7-1791707207-1791689207",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -293,7 +277,7 @@
           "label": "HD (auto)",
           "url": "https://2.ftlly.com/dsportsplus/mono.m3u8?token=fb6f612081f5f3afc9e42d53104cd7021c932e54-54-1792010266-1791992266",
           "updatedAt": "2026-10-14T15:52:50.609Z",
-          "referer": "https://tvf90.com/5.php?stream=dsports_eventos",
+          "referer": "https://tvf90.com",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
