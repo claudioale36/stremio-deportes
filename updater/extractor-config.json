@@ -57,7 +57,8 @@
         "type": "api-embed",
         "channelName": "ESPN Premium",
         "preferHD": true,
-        "url": "https://futbollibre.mom/canal/liga-1-max",
+        "url": "https://embed.ksdjugfssddeports.com/embed2/espnpremiumar.php",
+        "url2": "https://futbollibre.mom/canal/liga-1-max",
         "depth": 1
       }
     },
