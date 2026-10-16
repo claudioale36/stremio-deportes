@@ -20,7 +20,7 @@ services:
       # heredando su DNS. Sin esto, apt-get update falla (exit 100) porque
       # el namespace de red de BuildKit no resuelve mirrors externos.
       network: host
-    container_name: stremio-updater
+    container_name: stremio-deportes-updater
     restart: unless-stopped
     # Usa la red del host directamente — el contenedor solo hace conexiones salientes
     # (extracción + push a GitHub). Sin host networking, GitHub HTTPS queda bloqueado
