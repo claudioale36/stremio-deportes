@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-15T23:52:08.269Z",
+  "lastUpdated": "2026-10-16T01:31:22.406Z",
   "channels": [
     {
       "id": "fox-sports",
@@ -16,8 +16,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://11.ftlly.com/foxsports/mono.m3u8?token=c069dd388c2eceaac166369b918acd356842487a-14-1792125317-1792107317",
-          "updatedAt": "2026-10-15T23:50:24.416Z",
+          "url": "https://6.ftlly.com/foxsports/mono.m3u8?token=9939bb1d60706675527ef80c65a9377add6fc903-f4-1792131257-1792113257",
+          "updatedAt": "2026-10-16T01:29:26.493Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -57,8 +57,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://9.ftlly.com/disney11/mono.m3u8?token=c446b4e9af42bded7bed68c94e2b8cfabbfa3376-35-1792125327-1792107327",
-          "updatedAt": "2026-10-15T23:50:31.718Z",
+          "url": "https://7.ftlly.com/disney11/mono.m3u8?token=7dc5b91ec8fbdeb6265b27aa3209ea7493d634f1-3d-1792131274-1792113274",
+          "updatedAt": "2026-10-16T01:29:39.549Z",
           "referer": "https://tvf90.com/5.php?stream=disney29",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -88,8 +88,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://8.ftlly.com/espn/mono.m3u8?token=7ae1dc767ddeb35eff6ee5c180fa928f38f3be3d-ef-1792125333-1792107333",
-          "updatedAt": "2026-10-15T23:50:36.902Z",
+          "url": "https://8.ftlly.com/espn/mono.m3u8?token=9b967b5037fe3f8274162cea16ba415d569d60cb-5b-1792131281-1792113281",
+          "updatedAt": "2026-10-16T01:29:45.211Z",
           "referer": "https://tvf90.com/5.php?stream=espn",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -119,8 +119,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://6.ftlly.com/espn2/mono.m3u8?token=1f58b7a1c019c40354490ca247651c42035525b6-e9-1792125338-1792107338",
-          "updatedAt": "2026-10-15T23:50:42.494Z",
+          "url": "https://11.ftlly.com/espn2/mono.m3u8?token=c9a848d965b1607ba9c85f56316b31536854c98a-ba-1792131287-1792113287",
+          "updatedAt": "2026-10-16T01:29:52.247Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -149,8 +149,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://2.ftlly.com/espn3/mono.m3u8?token=f4475ed272839e279cc3cc8dbd0c3bee6bd1ec4a-37-1792125344-1792107344",
-          "updatedAt": "2026-10-15T23:50:47.874Z",
+          "url": "https://7.ftlly.com/espn3/mono.m3u8?token=289d388d7ca794bbb9b7dad84cad11f4c924ce32-d2-1792131294-1792113294",
+          "updatedAt": "2026-10-16T01:29:57.995Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -209,8 +209,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://11.ftlly.com/tycsports/mono.m3u8?token=c131419a124f93193e9a231ba98149c3a9e36889-c6-1792125352-1792107352",
-          "updatedAt": "2026-10-15T23:50:56.562Z",
+          "url": "https://9.ftlly.com/tycsports/mono.m3u8?token=cd55b280c6d953f8013c9efcfb64e3481f7498ae-50-1792131302-1792113302",
+          "updatedAt": "2026-10-16T01:30:07.912Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -246,8 +246,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://7.ftlly.com/tntsports/mono.m3u8?token=4d8b06c647c52af41b3ca71581236ea0c7348aec-44-1792125358-1792107358",
-          "updatedAt": "2026-10-15T23:51:04.231Z",
+          "url": "https://9.ftlly.com/tntsports/mono.m3u8?token=20e48b8f44bea8cfc4f4b6609b343c892304accb-5-1792131310-1792113310",
+          "updatedAt": "2026-10-16T01:30:15.284Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
