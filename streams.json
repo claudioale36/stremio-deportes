@@ -2,6 +2,291 @@
   "lastUpdated": "2026-10-16T19:45:18.478Z",
   "channels": [
     {
+      "id": "espn-premium",
+      "name": "ESPN Premium",
+      "description": "ESPN Premium en vivo",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/db/ESPN_Premium_logo.png",
+      "background": "",
+      "genres": [
+        "Fútbol",
+        "Deportes"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://5.ftlly.com/espnpremium/mono.m3u8?token=8850a0ba6055ac203f200cb00b5d44ff7d258709-ee-1792196954-1792178954",
+          "updatedAt": "2026-10-16T19:44:17.991Z",
+          "headers": {
+            "Referer": "https://tvf90.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disney-+-3",
+      "name": "Disney+ 3 - ESPN 5",
+      "description": "Disney + - ESPN Premium — Formula 1",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://6.ftlly.com/disney3/mono.m3u8?token=ada6635de23cbd3f4549c2be307ff0208928cc78-a5-1792196883-1792178883",
+          "updatedAt": "2026-10-16T19:43:20.613Z",
+          "referer": "https://tvf90.com/5.php?stream=disney29",
+          "headers": {
+            "Referer": "https://tvf90.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disney-+-4",
+      "name": "Disney+ 4 - ESPN 4",
+      "description": "Disney + 4 - ESPN 4",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://6.ftlly.com/disney3/mono.m3u8?token=ada6635de23cbd3f4549c2be307ff0208928cc78-a5-1792196883-1792178883",
+          "updatedAt": "2026-10-16T19:43:20.613Z",
+          "referer": "https://tvf90.com/5.php?stream=disney29",
+          "headers": {
+            "Referer": "https://tvf90.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disney-+-5",
+      "name": "Disney+ 5 - ESPN 5",
+      "description": "Disney + 5 - ESPN 5",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://6.ftlly.com/disney3/mono.m3u8?token=ada6635de23cbd3f4549c2be307ff0208928cc78-a5-1792196883-1792178883",
+          "updatedAt": "2026-10-16T19:43:20.613Z",
+          "referer": "https://tvf90.com/5.php?stream=disney29",
+          "headers": {
+            "Referer": "https://tvf90.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disney-+-21",
+      "name": "Disney+ 21 - ESPN",
+      "description": "Disney + 21 - ESPN",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes",
+        "Fútbol"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://6.ftlly.com/disney3/mono.m3u8?token=ada6635de23cbd3f4549c2be307ff0208928cc78-a5-1792196883-1792178883",
+          "updatedAt": "2026-10-16T19:43:20.613Z",
+          "referer": "https://tvf90.com/5.php?stream=disney29",
+          "headers": {
+            "Referer": "https://tvf90.com/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "onboard-colapinto",
+      "name": "OnBoard Colapinto",
+      "description": "Camara OnBoard de Colapinto",
+      "logo": "",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
+      "streams": [
+        {
+          "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "url": "https://mileixd.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=02d86679cdc760a3d9622845cf176628a92b357c-dc-1791737494-1791683494",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "race-hub",
+      "name": "Race Hub",
+      "description": "Race Hub",
+      "logo": "",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
+      "streams": [
+        {
+          "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "url": "https://mileixd.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=02d86679cdc760a3d9622845cf176628a92b357c-dc-1791737494-1791683494",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "url": "https://mileixd.futlivehd.com/disney5/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=bba53f03d6f9291eba2de962c69845382e0855c4-f7-1791737550-1791683550",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "url": "https://khala.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=30cbf500f7ef377662d6e421a749d4445ef6e465-71-1791737624-1791683624",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dazn-f1",
+      "name": "DAZN F1",
+      "description": "DAZN F1 — Formula 1",
+      "logo": "",
+      "background": "",
+      "genres": [
+        "F1",
+        "Motorsport",
+        "Deportes"
+      ],
+      "streams": [
+        {
+          "label": "HD (auto)",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=95fd86cbdb0f1a4889b3ab821692ddd200d25b20-b11c806dd78238eda2b51164e727b50b-1792201174-1792179574",
+          "updatedAt": "2026-10-16T19:44:43.393Z",
+          "headers": {
+            "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          }
+        },
+        {
+          "url": "https://lala4.futlivehd.com/daznf1/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=2596e4706c7c757b88194509f9b82e0cc286927c-e1-1791736847-1791682847",
+          "label": "HD 1080p",
+          "headers": {
+            "Referer": "https://pelotalibrestv.su",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        },
+        {
+          "label": "HD 1080p",
+          "url": "",
+          "headers": {
+            "Referer": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+          }
+        }
+      ]
+    },
+    {
       "id": "fox-sports",
       "name": "Fox Sports HD",
       "description": "Fox Sports en vivo",
@@ -37,39 +322,6 @@
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        }
-      ]
-    },
-    {
-      "id": "disney-+",
-      "name": "Disney +",
-      "description": "Disney + - ESPN Premium — Formula 1",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Disney_%2B.png",
-      "background": "",
-      "genres": [
-        "F1",
-        "Motorsport",
-        "Deportes",
-        "Fútbol"
-      ],
-      "streams": [
-        {
-          "label": "HD (auto)",
-          "url": "https://6.ftlly.com/disney3/mono.m3u8?token=ada6635de23cbd3f4549c2be307ff0208928cc78-a5-1792196883-1792178883",
-          "updatedAt": "2026-10-16T19:43:20.613Z",
-          "referer": "https://tvf90.com/5.php?stream=disney29",
-          "headers": {
-            "Referer": "https://tvf90.com/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          }
-        },
-        {
-          "url": "https://lala4.futlivehd.com/disney4/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=ea3b5dafface8ac7e48b1a5f3e2ab22fc8ec21c2-83-1791736620-1791682620",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         }
@@ -158,36 +410,6 @@
         },
         {
           "url": "https://c2f2zq.fubo18.com/espn3/mono.m3u8?token=e78d1c70e8a211cdabbf9aa3e89a66e05a03358d-ab-1791695587-1791677587",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        }
-      ]
-    },
-    {
-      "id": "espn-premium",
-      "name": "ESPN Premium",
-      "description": "ESPN Premium en vivo",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/db/ESPN_Premium_logo.png",
-      "background": "",
-      "genres": [
-        "Fútbol",
-        "Deportes"
-      ],
-      "streams": [
-        {
-          "label": "HD (auto)",
-          "url": "https://5.ftlly.com/espnpremium/mono.m3u8?token=8850a0ba6055ac203f200cb00b5d44ff7d258709-ee-1792196954-1792178954",
-          "updatedAt": "2026-10-16T19:44:17.991Z",
-          "headers": {
-            "Referer": "https://tvf90.com/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          }
-        },
-        {
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/42/tracks-v1a1/mono.m3u8?token=f5909c966a82c05afbcb16e9470b3942866c13e9-912a165891b87c3d012aa21d6ed6251f-1791703694-1791682094",
           "label": "HD 1080p",
           "headers": {
             "Referer": "",
@@ -294,45 +516,6 @@
       ]
     },
     {
-      "id": "dazn-f1",
-      "name": "DAZN F1",
-      "description": "DAZN F1 — Formula 1",
-      "logo": "",
-      "background": "",
-      "genres": [
-        "F1",
-        "Motorsport",
-        "Deportes"
-      ],
-      "streams": [
-        {
-          "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=95fd86cbdb0f1a4889b3ab821692ddd200d25b20-b11c806dd78238eda2b51164e727b50b-1792201174-1792179574",
-          "updatedAt": "2026-10-16T19:44:43.393Z",
-          "headers": {
-            "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          }
-        },
-        {
-          "url": "https://lala4.futlivehd.com/daznf1/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=2596e4706c7c757b88194509f9b82e0cc286927c-e1-1791736847-1791682847",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        }
-      ]
-    },
-    {
       "id": "sportv3",
       "name": "SporTV 3",
       "description": "SporTV 3 — Formula 1",
@@ -366,90 +549,6 @@
           "url": "",
           "headers": {
             "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        }
-      ]
-    },
-    {
-      "id": "onboard-colapinto",
-      "name": "OnBoard Colapinto",
-      "description": "Camara OnBoard de Colapinto",
-      "logo": "",
-      "background": "",
-      "genres": [
-        "F1",
-        "Motorsport",
-        "Deportes"
-      ],
-      "streams": [
-        {
-          "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://mileixd.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=02d86679cdc760a3d9622845cf176628a92b357c-dc-1791737494-1791683494",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "label": "HD 1080p",
-          "url": "",
-          "headers": {
-            "Referer": "",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        }
-      ]
-    },
-    {
-      "id": "race-hub",
-      "name": "Race Hub",
-      "description": "Race Hub",
-      "logo": "",
-      "background": "",
-      "genres": [
-        "F1",
-        "Motorsport",
-        "Deportes"
-      ],
-      "streams": [
-        {
-          "url": "https://mileixd.futlivehd.com/disney6/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=dd36e1c7481c27bf65ac2a7fcf82c917def94c23-fd-1791737437-1791683437",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://mileixd.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=02d86679cdc760a3d9622845cf176628a92b357c-dc-1791737494-1791683494",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://mileixd.futlivehd.com/disney5/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=bba53f03d6f9291eba2de962c69845382e0855c4-f7-1791737550-1791683550",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-          }
-        },
-        {
-          "url": "https://khala.futlivehd.com/disney8/tracks-v1a1/mono.m3u8?ip=200.127.24.170&token=30cbf500f7ef377662d6e421a749d4445ef6e465-71-1791737624-1791683624",
-          "label": "HD 1080p",
-          "headers": {
-            "Referer": "https://pelotalibrestv.su",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
           }
         }
