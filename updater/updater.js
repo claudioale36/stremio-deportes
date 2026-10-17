@@ -426,12 +426,18 @@ async function extractAll() {
   const browser = await puppeteer.launch({
     executablePath: CHROMIUM_PATH,
     headless:        true,
+    // pipe: true — usa stdin/stdout en lugar de WebSocket para comunicarse con Chromium.
+    // Las versiones recientes de puppeteer-core (22.8+) cambiaron el protocolo default;
+    // con WebSocket el Chromium del sistema instalado via apt no responde a tiempo
+    // y lanza "Timed out waiting for WS endpoint URL". pipe evita ese handshake y es
+    // el metodo recomendado para Docker + Chromium del sistema operativo.
+    pipe: true,
     args: [
       '--no-sandbox',                                   // Requerido en Docker (el contenedor corre como root)
-      '--disable-setuid-sandbox',                       // Ídem
+      '--disable-setuid-sandbox',                       // Idem
       '--disable-dev-shm-usage',                        // Evita crashes por falta de memoria compartida en Docker
       '--disable-gpu',                                  // Sin GPU en servidor headless
-      '--mute-audio',                                   // No reproducir audio durante la extracción
+      '--mute-audio',                                   // No reproducir audio durante la extraccion
       '--no-zygote',                                    // Evita procesos zombie en entornos con pid namespace restringido
       '--disable-blink-features=AutomationControlled',  // Oculta el flag CDP que delata al browser automatizado
       '--autoplay-policy=no-user-gesture-required',     // Permite que el player arranque sin gesto del usuario
