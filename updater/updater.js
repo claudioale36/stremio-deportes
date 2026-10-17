@@ -577,15 +577,13 @@ async function gitPush(updated = 0, total = 0) {
 
 /**
  * Punto de entrada del servicio.
- * Al arrancar: extrae inmediatamente (tokens del ciclo anterior ya vencieron).
- * Luego programa el ciclo periódico con UPDATE_INTERVAL_HOURS.
+ * Extrae una vez y termina — el ciclo periódico lo maneja run.sh via sleep.
+ * Esto garantiza que Node.js libere toda la memoria (heap V8 + Chromium) al finalizar.
  */
 async function main() {
   console.log('╔═════════════════════════════════════════╗');
   console.log('║    Stremio Deportes — Updater           ║');
   console.log('╚═════════════════════════════════════════╝');
-  console.log(`[updater] Intervalo:        cada ${UPDATE_INTERVAL_HOURS}h`);
-  console.log(`[updater] Edad máx. tokens: ${MAX_TOKEN_AGE_HOURS}h`);
   console.log(`[updater] Repo:             ${REPO_PATH}`);
   console.log(`[updater] streams.json:     ${STREAMS_JSON_PATH}`);
   console.log(`[updater] Chromium:         ${CHROMIUM_PATH}`);
@@ -597,20 +595,13 @@ async function main() {
     console.log('[git] ✅ GITHUB_TOKEN presente — push HTTPS habilitado');
   }
 
-  // ── Siempre extraer al arrancar ────────────────────────────────────────────
-  // Cada arranque del contenedor implica que los tokens deben renovarse.
-  // El ciclo periódico (setInterval) se encarga de las renovaciones siguientes.
-  console.log('\n[updater] Arranque detectado — extracción inmediata');
+  // ── Extraer y salir ────────────────────────────────────────────────────────
+  // El ciclo periódico es responsabilidad de run.sh (sleep entre invocaciones).
+  // Node.js termina con process.exit() para liberar heap V8 y procesos Chromium.
+  await extractAll();
 
-  await extractAll().catch(err => console.error('[updater] Error en extracción inicial:', err.message));
-
-  // ── Ciclo periódico ──────────────────────────────────────────────────────
-  const intervalMs = UPDATE_INTERVAL_HOURS * 60 * 60 * 1000;
-  setInterval(async () => {
-    await extractAll().catch(err => console.error('[updater] Error en ciclo periódico:', err.message));
-  }, intervalMs);
-
-  console.log('\n[updater] ✅ Servicio activo\n');
+  console.log('\n[updater] ✅ Ciclo completado — proceso terminado\n');
+  process.exit(0);
 }
 
 main().catch(err => {

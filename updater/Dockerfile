@@ -43,6 +43,8 @@ RUN npm ci --omit=dev
 # Código y config (capas que cambian seguido — van al final para aprovechar caché)
 COPY updater.js .
 COPY extractor-config.json .
+COPY run.sh .
+RUN chmod +x /app/updater/run.sh
 
 ENV REPO_PATH=/app/repo
 ENV STREAMS_JSON_PATH=/app/repo/streams.json
@@ -52,4 +54,6 @@ ENV MAX_TOKEN_AGE_HOURS=3
 # Ruta al binario de Chromium instalado por apt — puppeteer-core lo requiere explícito
 ENV CHROMIUM_PATH=/usr/bin/chromium
 
-CMD ["node", "updater.js"]
+# run.sh ejecuta node updater.js, espera UPDATE_INTERVAL_HOURS horas y repite.
+# Node.js termina (process.exit) despues de cada ciclo — memoria liberada entre ejecuciones.
+CMD ["/bin/sh", "/app/updater/run.sh"]
