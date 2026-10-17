@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-17T00:30:30.206Z",
+  "lastUpdated": "2026-10-17T03:30:04.313Z",
   "channels": [
     {
       "id": "espn-premium",
@@ -261,8 +261,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=3b1e6a779d8ddec1a5482d3dcb380e1ea57361f4-795c5f57213c129aa065bc6a5a48bbc8-1792218288-1792196688",
-          "updatedAt": "2026-10-17T00:29:57.039Z",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=14ce0a0ffd7b0d71daaae7922f9cb63fcd78fa4f-7744ff90049406b46ded03d6a893f986-1792229063-1792207463",
+          "updatedAt": "2026-10-17T03:29:31.794Z",
           "headers": {
             "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -301,8 +301,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://9.ftlly.com/foxsports/mono.m3u8?token=f3fa38bfcf06690e7a1d70fe653014d2fbdd5c9e-e2-1792214043-1792196043",
-          "updatedAt": "2026-10-17T00:29:12.024Z",
+          "url": "https://10.ftlly.com/foxsports/mono.m3u8?token=bd5918ef3b0a0c5538bda950b535bbbecbb380aa-a1-1792224843-1792206843",
+          "updatedAt": "2026-10-17T03:29:11.338Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -431,8 +431,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://3.ftlly.com/tycsports/mono.m3u8?token=693016e442998c2e4eb964bfae38efb8d758c2fb-4f-1792214080-1792196080",
-          "updatedAt": "2026-10-17T00:29:44.468Z",
+          "url": "https://2.ftlly.com/tycsports/mono.m3u8?token=07ca9732768bdd839cd68f5144a738779d95534b-f7-1792224855-1792206855",
+          "updatedAt": "2026-10-17T03:29:19.838Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
