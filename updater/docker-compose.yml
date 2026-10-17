@@ -12,7 +12,7 @@
 #   docker compose up -d --build
 # ─────────────────────────────────────────────────────────────────────────────
 
-name: stremio-deportes
+name: stremio-deportes-updater
 
 services:
   stremio-deportes-updater:
