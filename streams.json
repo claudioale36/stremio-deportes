@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-19T06:34:39.110Z",
+  "lastUpdated": "2026-10-19T09:37:14.222Z",
   "channels": [
     {
       "id": "espn-premium",
@@ -261,8 +261,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=d1388f63171ac09eb5695d53ad6410bd90f33c6b-a70723d78748e63c9b369e5f8c46a47b-1792412871-1792391271",
-          "updatedAt": "2026-10-19T06:33:00.450Z",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=0847a47ddac5d657ab4ac040d2c17396cded64c4-34fb9c5e0a96041cb1edfbf207afb303-1792423830-1792402230",
+          "updatedAt": "2026-10-19T09:35:38.560Z",
           "headers": {
             "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -301,8 +301,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://6.ftlly.com/foxsports/mono.m3u8?token=829bfe53992b7f7726e716034386c78ea5a86e24-2c-1792408733-1792390733",
-          "updatedAt": "2026-10-19T06:33:56.679Z",
+          "url": "https://9.ftlly.com/foxsports/mono.m3u8?token=f432983b5ad8360414d3df2af4eab6ab278b30c5-14-1792419690-1792401690",
+          "updatedAt": "2026-10-19T09:36:33.110Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -340,8 +340,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://7.ftlly.com/espn/mono.m3u8?token=ff02dab953a4d7e7b136142ab2302642e3ace730-ac-1792408714-1792390714",
-          "updatedAt": "2026-10-19T06:33:39.822Z",
+          "url": "https://9.ftlly.com/espn/mono.m3u8?token=39703aeb6f71c45e281cdd59f9b16aace6b34559-8e-1792419671-1792401671",
+          "updatedAt": "2026-10-19T09:36:17.644Z",
           "referer": "https://tvf90.com/5.php?stream=espn",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -371,8 +371,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://11.ftlly.com/espn2/mono.m3u8?token=c6f3d744c55c4cd05ea3ca050396c6b7781ce750-28-1792408721-1792390721",
-          "updatedAt": "2026-10-19T06:33:46.508Z",
+          "url": "https://6.ftlly.com/espn2/mono.m3u8?token=fe7abe9e3e1a8b9c83be3c6f69ff1bdaf38d5d24-30-1792419679-1792401679",
+          "updatedAt": "2026-10-19T09:36:24.076Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -401,8 +401,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://10.ftlly.com/espn3/mono.m3u8?token=3890ba84913b7e9c6b07c6817b21a15be0770ec9-e5-1792408728-1792390728",
-          "updatedAt": "2026-10-19T06:33:51.566Z",
+          "url": "https://2.ftlly.com/espn3/mono.m3u8?token=42a3f563f99c51e5979bc10866b397820058c1ca-e2-1792419685-1792401685",
+          "updatedAt": "2026-10-19T09:36:29.369Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -431,8 +431,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://5.ftlly.com/tycsports/mono.m3u8?token=4876a5cff1404560a92f1c3952ff68ca501d0237-65-1792408740-1792390740",
-          "updatedAt": "2026-10-19T06:34:05.584Z",
+          "url": "https://4.ftlly.com/tycsports/mono.m3u8?token=90ab581d16cf456b22ede832cf398d552265a4b4-db-1792419697-1792401697",
+          "updatedAt": "2026-10-19T09:36:41.476Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
