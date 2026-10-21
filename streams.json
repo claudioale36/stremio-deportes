@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-20T22:14:15.366Z",
+  "lastUpdated": "2026-10-21T01:19:36.736Z",
   "channels": [
     {
       "id": "espn-premium",
@@ -261,8 +261,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=7ed229902e559d0f1448c699cfc778012e66b686-5fd120175639120adb9b9a14dc356e27-1792555659-1792534059",
-          "updatedAt": "2026-10-20T22:12:55.370Z",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=dbe8dfa2f170b770dd9971ff02eafd1907791292-43d37736ce879ed1577f65dac0286cf0-1792566736-1792545136",
+          "updatedAt": "2026-10-21T01:17:27.202Z",
           "headers": {
             "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -340,8 +340,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://10.ftlly.com/espn/mono.m3u8?token=a60c9ca8edb8265d9792546dabc9171860416238-17-1792551478-1792533478",
-          "updatedAt": "2026-10-20T22:13:06.894Z",
+          "url": "https://10.ftlly.com/espn/mono.m3u8?token=2201c4cf362f478d8b941e8d9a3bf8b159c94afe-e1-1792562557-1792544557",
+          "updatedAt": "2026-10-21T01:17:47.931Z",
           "referer": "https://tvf90.com/5.php?stream=espn",
           "headers": {
             "Referer": "https://tvf90.com/",
