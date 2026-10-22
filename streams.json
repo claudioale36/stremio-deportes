@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-21T22:48:24.399Z",
+  "lastUpdated": "2026-10-22T01:52:38.720Z",
   "channels": [
     {
       "id": "espn-premium",
@@ -145,8 +145,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://7.ftlly.com/disney19/mono.m3u8?token=75c3e7c6a404a8019beeedaa54c4fd36c273eed5-fc-1792639913-1792621913",
-          "updatedAt": "2026-10-21T22:46:58.097Z",
+          "url": "https://2.ftlly.com/disney19/mono.m3u8?token=6c7cdac0218a64c4eb88e2febb67aedfbf879bfd-aa-1792650942-1792632942",
+          "updatedAt": "2026-10-22T01:50:58.082Z",
           "referer": "https://tvf90.com/5.php?stream=disney29",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -261,8 +261,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=4b19e0bfc798b440d7e11ae08df4eb0b684289bd-b2b44c27b68952a1704697a3d8fc85d2-1792644122-1792622522",
-          "updatedAt": "2026-10-21T22:47:11.446Z",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=bb767e1f995a63d98ef88419d84652b4e01af2dc-7eef1f778a1b7abd3c1d17414534f8f5-1792655173-1792633573",
+          "updatedAt": "2026-10-22T01:51:23.764Z",
           "headers": {
             "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -301,8 +301,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://3.ftlly.com/foxsports/mono.m3u8?token=4ec2961bc2b330f5b2d1bc5ce13cdf36ce58f2db-66-1792639947-1792621947",
-          "updatedAt": "2026-10-21T22:47:30.555Z",
+          "url": "https://11.ftlly.com/foxsports/mono.m3u8?token=63d9b601aa0c25112463f14bcb2184dfb05d9644-d2-1792650998-1792632998",
+          "updatedAt": "2026-10-22T01:51:40.978Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -340,8 +340,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://7.ftlly.com/espn/mono.m3u8?token=4f4920d9f8398b9e797c978d18c623b1403662f0-59-1792639933-1792621933",
-          "updatedAt": "2026-10-21T22:47:17.851Z",
+          "url": "https://3.ftlly.com/espn/mono.m3u8?token=5ce40728563ea97bf19ebd341dc771824a028a2e-c8-1792650985-1792632985",
+          "updatedAt": "2026-10-22T01:51:30.292Z",
           "referer": "https://tvf90.com/5.php?stream=espn",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -371,8 +371,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://6.ftlly.com/espn2/mono.m3u8?token=b63ea3d804cae7b98419e8910dcfcc9bbd82eec2-d3-1792639939-1792621939",
-          "updatedAt": "2026-10-21T22:47:25.343Z",
+          "url": "https://11.ftlly.com/espn2/mono.m3u8?token=243bb568b6251fa0d466ad4ffebb37e566147028-86-1792650991-1792632991",
+          "updatedAt": "2026-10-22T01:51:36.503Z",
           "headers": {
             "Referer": "https://tvf90.com/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -529,8 +529,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://bmf0aw9u.fubo18.com/sportv3/mono.m3u8?token=913a8b97635f79bc3fe1ddb1f08ded0d1ab3b0a3-54-1792639996-1792621996",
-          "updatedAt": "2026-10-21T22:48:22.413Z",
+          "url": "https://y2fzdgxl.fubo18.com/sportv3/mono.m3u8?token=8b3292813cfbfc2536499f35f8c4468107ea10ce-93-1792651047-1792633047",
+          "updatedAt": "2026-10-22T01:52:34.272Z",
           "headers": {
             "Referer": "https://la18hd.su/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
