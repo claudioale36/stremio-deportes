@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-24T05:22:26.584Z",
+  "lastUpdated": "2026-10-24T08:24:38.978Z",
   "channels": [
     {
       "id": "espn-premium",
@@ -261,8 +261,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=3e303f0823fddce35a8bb4ef8a5d6f0459ffe10f-4886abb73fe0b8a56e7b16d03688bb15-1792840569-1792818969",
-          "updatedAt": "2026-10-24T05:21:22.090Z",
+          "url": "https://deportes.ksdjugfssddeports.com/playlist/27/index.m3u8?token=a78abc8c7cc319ada7f4365feafca7a69afcf9c6-59fcb9c245f008d2c26851ae99b9247c-1792851490-1792829890",
+          "updatedAt": "2026-10-24T08:23:27.847Z",
           "headers": {
             "Referer": "https://deportes.ksdjugfssddeports.com/stream.php?canal=daznf1&target=2&sig=89cd89fdf5112cfd1fc35c02a0b7d4e1461c0dba98c551f5804cbe153e2099bd",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -301,8 +301,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://2.ftlly.com/foxsports/mono.m3u8?token=73a628f8ad83cbed241697cdf832d8a2b38867ce-a3-1792836384-1792818384",
-          "updatedAt": "2026-10-24T05:21:29.791Z",
+          "url": "https://8.ftlly.com/foxsports/mono.m3u8?token=f689761be44580709e77610356c4b41b8267bf4e-72-1792847310-1792829310",
+          "updatedAt": "2026-10-24T08:23:37.817Z",
           "referer": "https://tvf90.com/5.php?stream=foxsports",
           "headers": {
             "Referer": "https://tvf90.com/",
@@ -529,8 +529,8 @@
       "streams": [
         {
           "label": "HD (auto)",
-          "url": "https://dglvz29s.fubo18.com/sportv3/mono.m3u8?token=f886e421b9f1c85e75a5899a8240bdfdce12d9a0-ed-1792836436-1792818436",
-          "updatedAt": "2026-10-24T05:22:24.467Z",
+          "url": "https://a2lja3m.fubo18.com/sportv3/mono.m3u8?token=f2b02b6c92abe7c28490fbc0fcbc2add92cb2fd7-da-1792847368-1792829368",
+          "updatedAt": "2026-10-24T08:24:35.236Z",
           "headers": {
             "Referer": "https://la18hd.su/",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
