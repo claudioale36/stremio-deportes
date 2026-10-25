@@ -423,6 +423,11 @@ async function extractAll() {
   // Reutilizarla evita el overhead de arrancar Chromium (~2-3s) por cada canal.
   // Se cierra en el bloque finally para garantizar que no queden procesos huérfanos.
   console.log(`[browser] Lanzando Chromium: ${CHROMIUM_PATH}`);
+  // Directorio de perfil temporal por corrida — garantiza estado limpio en cada ejecución.
+  // Sin esto, Chromium puede heredar estado corrupto de una corrida anterior (especialmente
+  // si fue terminado con SIGKILL) y fallar al inicializar el protocolo CDP.
+  const userDataDir = `/tmp/chromium-run-${Date.now()}`;
+
   const browser = await puppeteer.launch({
     executablePath: CHROMIUM_PATH,
     headless:        true,
@@ -432,6 +437,10 @@ async function extractAll() {
     // y lanza "Timed out waiting for WS endpoint URL". pipe evita ese handshake y es
     // el metodo recomendado para Docker + Chromium del sistema operativo.
     pipe: true,
+    // protocolTimeout: tiempo máximo para que Chromium responda al handshake CDP inicial.
+    // Default de puppeteer-core: 30 000 ms. Con pipe:true y SIGKILL previo, Chromium
+    // puede tardar más en inicializar → aumentamos a 60s para absorber picos de carga.
+    protocolTimeout: 60_000,
     args: [
       '--no-sandbox',                                   // Requerido en Docker (el contenedor corre como root)
       '--disable-setuid-sandbox',                       // Idem
@@ -441,6 +450,8 @@ async function extractAll() {
       '--no-zygote',                                    // Evita procesos zombie en entornos con pid namespace restringido
       '--disable-blink-features=AutomationControlled',  // Oculta el flag CDP que delata al browser automatizado
       '--autoplay-policy=no-user-gesture-required',     // Permite que el player arranque sin gesto del usuario
+      `--user-data-dir=${userDataDir}`,                 // Perfil temporal limpio por corrida — evita
+                                                        // herencia de estado corrupto de corridas anteriores
     ]
   });
   console.log('[browser] ✅ Chromium iniciado');
@@ -508,6 +519,8 @@ async function extractAll() {
     // Cerrar el browser siempre, incluso si hubo errores
     await browser.close().catch(err => console.error(`[browser] Error al cerrar: ${err.message}`));
     console.log('[browser] Chromium cerrado');
+    // Limpiar el directorio de perfil temporal — se crea nuevo en cada corrida
+    fs.rmSync(userDataDir, { recursive: true, force: true });
   }
 
   // Actualizar timestamp en la raíz del JSON

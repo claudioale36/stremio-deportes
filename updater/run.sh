@@ -6,7 +6,7 @@
 # La periodicidad la maneja este script via sleep, no setInterval dentro de Node.
 # UPDATE_INTERVAL_HOURS se hereda del entorno Docker (ENV en Dockerfile / docker-compose.yml).
 
-WAIT_HOURS=${UPDATE_INTERVAL_HOURS:-3}
+WAIT_HOURS=${UPDATE_INTERVAL_HOURS:-1}
 
 while true; do
   echo "[run.sh] $(date -u +%Y-%m-%dT%H:%M:%SZ) — Iniciando ciclo de extraccion..."
